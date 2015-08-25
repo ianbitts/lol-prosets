@@ -8,16 +8,17 @@
             </div>
             <div class="panel-body">
                 <div class="panel-body">
-                    <form ng-submit="searchUser(userName)">
+                    <form ng-submit="searchUser(userName, selected_region)">
                         <label>Name:</label>
                         <input type="text" ng-model="userName" class="form-control" placeholder="Summoner name" id="search" required />
                         <br />
                         <label>Region:</label>
-                        <select name="region" class="form-control">
-                            <option>NA</option>
+                        <select name="region" ng-init="selected_region = regions[5]" class="form-control region-size" ng-model="selected_region" ng-options="region.name for region in regions">
+                            
+                            <!--<option>NA</option>
                             <option>EUNE</option>
                             <option>EUW</option>
-                            <option>OSC</option>
+                            <option>OSC</option>-->
                         </select>
                         <br /><br />
                         <button class="btn btn-success pull-right">Search</button>
@@ -57,17 +58,24 @@
                     <div class="panel-heading">
                         <h3 class="panel-title"> {{mapNames[match.mapId]}} -- {{match.matchCreation | date:'medium'}}</h3>
                     </div>
-                    <div class="panel-body">
-                        <table>
-                            <tr>
-                                <td>
-                                    <img src="http://ddragon.leagueoflegends.com/cdn/5.16.1/img/champion/{{match.participants[0].championId}}.png"></td>
-                                <td>Hero Name</td>
+                    <div class="panel-body modal-body">
+                        <table class="table-layout">
+                            <tr class="table-row">
+                                <td ng-repeat="image in getChampionImage(match.participants[0].championId)">
+                                    <img class="hero-img-format" src="http://ddragon.leagueoflegends.com/cdn/5.16.1/img/champion/{{image.key}}.png">
+                                    <span class="smTab absolute-position">{{image.name}}</span>
+                                </td>
+                                <td class="">
+                                    <img class="item-img-format" ng-repeat="items in getItemListPerMatch(match.participants[0].stats) track by $index" preload-image
+                                         data-fallback-image="http://ddragon.leagueoflegends.com/cdn/4.2.6/img/item/{{items}}.png"
+                                         ng-src="http://ddragon.leagueoflegends.com/cdn/5.16.1/img/item/{{items}}.png" alt="item image" />
+                                </td>
+                                <td class="">{{match.participants[0].stats.kills}}/{{match.participants[0].stats.deaths}}/{{match.participants[0].stats.assists}}</td>      
  
-                                <td>Items</td>
-                                <td>K/D/A</td>
-                                <td>Gold</td>
-                                <td>Duration</td>
+                                
+                                
+                                <td class="">{{match.participants[0].stats.goldEarned}}</td>
+                                <td class="">{{match.Duration}}</td>
                                 <td><button class="btn btn-primary">Get Item Set</button></td>
                             </tr>
                         </table>
@@ -94,11 +102,11 @@
                                          ng-repeat="heroImage in getChampionImage(heroMatch.participants[0].championId)"
                                          ng-src="http://ddragon.leagueoflegends.com/cdn/5.16.1/img/champion/{{heroImage.key + '.png'}}" alt="Hero Image" />
                                 <td class="smTab">{{heroMatch.queueType}}</td>
-                                </td>
+                                
 
                                 <td class="">
                                     <img class="item-img-format" ng-repeat="items in getItemListPerMatch(heroMatch.participants[0].stats) track by $index" preload-image
-                                         fallback-image="http://ddragon.leagueoflegends.com/cdn/4.2.6/img/item/{{items}}.png"
+                                         data-fallback-image="http://ddragon.leagueoflegends.com/cdn/4.2.6/img/item/{{items}}.png"
                                          ng-src="http://ddragon.leagueoflegends.com/cdn/5.16.1/img/item/{{items}}.png" alt="item image" />
                                 </td>
 

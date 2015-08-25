@@ -256,3 +256,18 @@ ul li{
     height: 178px;
     overflow-y: scroll;
 }
+.region-size{
+    width:190px;
+}
+.item-img-format{
+    width:40px;
+    height:40px;
+    float:left;   
+}
+.smTab{	padding-left:1em;}
+
+.absolute-position{
+	
+    position:absolute;
+
+}

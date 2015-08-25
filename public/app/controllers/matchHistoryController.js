@@ -7,6 +7,14 @@
             '1': "Summoner's Rift",
 	    };
 
+	    //	    $scope.regions = ["br", "eune", "euw", "kr", "lan", "las", "na", "oce", "ru", "tr"];
+	    $scope.regions = [
+            { region: "br", name: "Brazil" }, { region: "eune", name: "Europe Nordic & East" }, { region: "euw", name: "Europe West" },
+            { region: "lan" , name:"Latin America North" }, { region: "las" ,name: "Latin America South"},
+            { region: "na", name:"North America" }, { region: "oce" , name:"Oceania" }, { region: "ru"  ,name: "Russia"},
+            { region: "kr", name:"Republic of Korea" },{ region: "tr", name:"Turkey" }];
+
+
 		var onComplete = function (response) {
             $scope.heroes = championService.heroSort(response.data);
 			championService.heroList = $scope.heroes;		
@@ -84,7 +92,8 @@
 		}
 	
 	
-		$scope.searchUser = function(userName){
+		$scope.searchUser = function (userName, region) {
+		    debugger;
 			function hasWhiteSpace(s) {
 				return /\s/g.test(s);
 			}
@@ -92,13 +101,15 @@
 			$scope.recentMatches = undefined;
 			if(!hasWhiteSpace(userName)){
 				if($scope.userName){
-					matchService.getUserId(userName).then(function(data){
+				    matchService.getUserId(userName).then(function (data) {
+				        
 						if(data != undefined){
 							$scope.userName = userName.toLowerCase();
 							$scope.summonerResult = true;
 							$scope.userId = data[$scope.userName].id;					
 							
-							matchService.getRecentMatchDetails($scope.userId).then(function(data){					
+							matchService.getRecentMatchDetails($scope.userId, region.region).then(function (data) {
+							    debugger;
 								$scope.recentDisplayName = "Recent matches";
 								$scope.userNameDisplay = $scope.userName;
 								$scope.recentMatches = matchService.recentMatchSort(data.matches);	

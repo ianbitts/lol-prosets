@@ -11,9 +11,9 @@ if (Meteor.isServer) {
             return result;
         },
 
-        GetRecentMatchDetails: function (userId) {
+        GetRecentMatchDetails: function (userId, region) {
             this.unblock();
-            var url = "https://na.api.pvp.net/api/lol/na/v2.2/matchhistory/" + userId + "?beginIndex=0&endIndex=15&api_key=fc9cb83e-8c1d-488a-b71c-52c65f9ae015";
+            var url = "https://" + region + ".api.pvp.net/api/lol/na/v2.2/matchhistory/" + userId + "?beginIndex=0&endIndex=15&api_key=fc9cb83e-8c1d-488a-b71c-52c65f9ae015";
             return HTTP.call("GET", url);
         },
 
