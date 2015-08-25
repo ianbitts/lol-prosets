@@ -1,0 +1,252 @@
+﻿body {
+    padding-top: 25px;
+    padding-bottom: 20px;
+    background-image: url(/content/images/summoners-rift.jpg);
+}
+.navbar{
+    margin-top: 10px;
+}
+
+ul.nav li a {
+    color: gold;
+}
+.container {
+    background: rgba(0,0,0,0.7);
+}
+
+div.map{
+    margin: 2px auto 2px auto;
+    width: 185px;
+    text-align: left;
+}
+
+.map-panel{
+    text-align: center;
+    height: 274px;
+}
+#searchItems{
+    margin-bottom: 5px;
+}
+.map-icon{
+    height: 50px;
+    width: 50px;
+}
+.item-panel{
+    max-height: 300px;
+    overflow-y: scroll;
+}
+.champion-selected img{
+    border: solid 3px rgb(0, 188, 188);
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.top-panel {
+    height: 180px;
+    overflow-y: scroll;
+}
+img.item-icon{
+    height: 45px;
+    width: 45px;
+    float: left;
+}
+.hero-format{
+    box-shadow: 3px 3px 10px 1px #bdbcbc;
+    width:155px;
+    float:left;
+    margin:5px;
+    padding:5px;
+    display:table-cell;
+}
+.heroContainer{
+    margin-top:30px;
+}
+.dropdown:hover .dropdown-menu{
+    display: block;
+    margin-top: 0;
+}
+footer{
+    clear:left;
+    
+    position:relative;
+    width:700px;
+    margin: 0 auto;
+    
+}
+.hero-img-format{
+    width:50px;
+    height:50px;
+    float:left;         
+}
+.hero-img-format img {
+    opacity:0;
+    transition: .8s opacity;
+}
+.hero-img-format img.visible{
+    opacity: 1;
+}
+
+div.item{
+    z-index: 99;
+    cursor: pointer;
+}
+
+.heroContainer{
+    
+    display:table;
+}
+
+div.item {
+    float: left;
+}
+
+div.item img{
+    width: 40px;
+    height: 40px;
+    margin: 2px;
+}
+.modal-body{
+    margin:0;
+    padding:0;  
+    height: 100%; 
+    width:100%;
+    
+}
+#bg-image{
+    animation:fadeIn2 0.8s both ease-in; 
+    /*background: url("http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Shen_0.jpg");*/
+    background-size: 683px 460px;
+}
+.modal-footer{
+    margin:0;
+    
+}
+
+.mouseOver{
+    display: none;
+}
+div.champion-icon:hover span.mouseOver{
+    display: block;
+    position: absolute;
+    left: 5px;
+    top: 30px;
+    background-image: url("/content/images/yellow-paper.jpg");
+    padding: 4px;
+    border: solid 1px black;
+    z-index: 999;
+    
+}
+
+div.map:hover span.mouseOver{
+    display: block;
+    position: absolute;
+    left: 5px;
+    top: 30px;
+    background-color: yellow;
+    border: solid 1px black;
+    z-index: 999;
+}
+
+/*.ng-enter {z-index: 8888;}*/
+div.champion-icon{
+    float: left;
+    margin: 2px;
+    position: relative;
+    height: 50px;
+    width: 50px;
+    cursor: pointer;
+}
+.droppable{
+    min-height: 100px;
+}
+@keyframes fadeIn{
+    0% { opacity: 0;}
+    100% { opacity: 1;}
+
+}
+
+@keyframes fadeIn2{
+    0% { opacity: 0; background-color:white;}
+    100% { opacity: 0.8;}
+
+}
+@keyframes modalExpandHorizontal{
+    0%{ width: 10%; }
+    100%{ width:50%; }  
+}
+
+@keyframes modalExpandVertical{
+    0%{ margin-bottom: 12%; }
+    100%{ margin-bottom:40%; }  
+}
+
+.hero-format.ng-enter-stagger{
+    animation-delay:.015s;
+}
+.hero-format.ng-enter { 
+    animation:fadeIn 0.5s both ease-in;
+    
+}
+.modal-body span{
+    color:white;
+}
+
+
+.modal .modal-dialog{    
+    /*animation:modalExpandHorizontal 0.0s both ease-in;*/
+    width:705px;
+}
+.modal-body p{    
+    /*animation:modalExpandVertical 0.0s both ease-in;*/
+    
+    margin-bottom:280px;
+}
+ul li{
+    opacity:1;
+    list-style:none;
+    color:white;
+    z-index:3;
+}
+.progress{
+    width:100px;
+    margin:0;
+}
+.panel-body{
+    background: url(/content/images/brown-paper.jpg);
+}
+
+.panel-body .panel-body{
+    background-image: url(/content/images/yellow-paper.jpg);
+}
+
+.remove-group{
+    cursor: pointer;
+}
+
+.hide-map, .hide-filter, .hide-search, .hide-cost{
+    display: none;
+}
+
+#itemDetails {
+    padding: 4px;
+    max-width: 400px;
+    border: solid 2px brown;
+    background-image: url(/content/images/brown-paper.jpg);
+}
+
+#itemDetails div{
+    padding: 4px;
+    background-image: url(/content/images/yellow-paper.jpg);
+}
+
+#itemDetailsGold{
+    color: green;
+}
+
+.hover-off{
+    pointer-events: none;
+}

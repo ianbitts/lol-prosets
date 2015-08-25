@@ -1,0 +1,46 @@
+
+	<head>
+				<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+		<!-- Optional theme -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+		<!-- Latest compiled and minified JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular-animate.min.js"></script>
+		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular-route.min.js"></script>
+		<script src="/content/scripts/jquery.hoverIntent.minified.js"></script>
+		
+		<link rel="stylesheet" type="text/css" href="content/style.css">
+		<script src="lib/angular-preload-image.js"></script>
+		<script src="app/app.js"></script>
+		<script src="app/services/championService.js"></script> 
+        <script src="app/services/itemService.js"></script>
+        <script src="app/controllers/matchHistoryController.js"></script>
+		<script src="app/controllers/championsController.js"></script>
+        <script src="app/controllers/setsController.js"></script>
+        <script src="app/services/matchService.js"></script>        
+					
+	</head>
+	
+	<body data-ng-app="app">
+    <div class="container">
+        <nav class="navbar navbar-inverse">
+            <ul class="nav navbar-nav">
+                <li><a href="#/">LoL Pro Sets</a></li>
+                <li><a href="#/matchHistory">Match History</a></li>
+                <li><a href="#/sets">Item Set Builder</a></li>
+                <li><a href="/#/about">About</a></li>
+            </ul>
+
+        </nav>
+        <div data-ng-view>
+        </div>
+    </div>
+
+</body>
+	

@@ -1,0 +1,145 @@
+<div class="row">
+    <div class="col-sm-4">
+        <div class="panel panel-warning mm-panel">
+            <div class="panel-heading">
+                <h3 class="panel-title">Maps & Modes</h3>
+            </div>
+            <div class="panel-body map-panel">
+                <div class="panel-body">
+                    <div data-map="SR" class="map btn btn-warning" data-baditems="{{maps[11].unpurchasableItemList}}">
+                        <img class="map-icon" src="http://ddragon.leagueoflegends.com/cdn/5.2.1/img/map/{{maps[11].image.full}}" />
+                        Summoner's Rift
+                    </div>
+
+                    <div data-map="TT" class="map btn btn-warning" data-baditems="{{maps[10].unpurchasableItemList}}">
+                        <img class="map-icon" src="http://ddragon.leagueoflegends.com/cdn/5.2.1/img/map/{{maps[10].image.full}}" />
+                        Twisted Treeline
+                    </div>
+
+                    <div data-map="HA" class="map btn btn-warning" data-baditems="{{maps[12].unpurchasableItemList}}">
+                        <img class="map-icon" src="http://ddragon.leagueoflegends.com/cdn/5.2.1/img/map/{{maps[12].image.full}}" />
+                        Howling Abyss
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="col-sm-8">
+        <div class="panel panel-warning">
+            <div class="panel-heading">
+                <h3 class="panel-title">Champions</h3>
+            </div>
+            <div class="panel-body">
+                <div class="panel-body">
+                    <input id="searchChampions" class="search form-control" type="text" class="form-control" placeholder="Search Champions" />
+                    <div class="top-panel">
+                        <div id="{{hero.name}}" data-key="{{hero.key}}" class="champion-icon" data-ng-repeat="hero in heroes" data-name="{{hero.name}}">
+                            <img class="hero-img-format" data-err-img
+                                 ng-src="http://ddragon.leagueoflegends.com/cdn/{{version}}/img/champion/{{hero.key + '.png'}}" alt="Hero Image" />
+                            <span class="mouseOver">{{hero.name}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-sm-6">
+        <div class="panel panel-warning">
+            <div class="panel-heading">
+                <h3 class="panel-title">Items</h3>
+            </div>
+            <div class="panel-body">
+                <div class="panel panel-warning">
+                    <div class="panel-heading">
+                    </div>
+                    <div class="panel-body">
+                        <input id="searchItems" type="text" class="search form-control" placeholder="Search Items" />
+
+                        <label for="consumable" class="col-lg-3 col-md-5">Consumables</label>
+                        <input class="filterChkbox col-md-1" name="consumables" type="checkbox" data-filter='["Consumable"]' />
+                        <label for="boots" class="col-lg-3 col-md-5">Boots</label>
+                        <input class="filterChkbox col-md-1" name=" boots" type="checkbox" data-filter='["Boots"]' />
+                        <label for="attack" class="col-lg-3 col-md-5">Attack</label>
+                        <input class="filterChkbox col-md-1" name="attack" type="checkbox" data-filter='["Damage","AttackSpeed","CriticalStrike"]' />
+                        <label for="health" class="col-lg-3 col-md-5">HP</label>
+                        <input class="filterChkbox col-md-1" name="health" type="checkbox" data-filter='["Health","HealthRegen"]' />
+                        <label for="mana" class="col-lg-3 col-md-5">Mana</label>
+                        <input class="filterChkbox col-md-1" name="mana" type="checkbox" data-filter='["Mana","ManaRegen"]' />
+                        <label for="ability" class="col-lg-3 col-md-5">Ability Power</label>
+                        <input class="filterChkbox col-md-1" name="ability" type="checkbox" data-filter='["SpellDamage"]' />
+                        <label for="armor" class="col-lg-3 col-md-5">Armor</label>
+                        <input class="filterChkbox col-md-1" name="armor" type="checkbox" data-filter='["Armor"]' />
+                        <label for="magicres" class="col-lg-3 col-md-5">Magic Resist</label>
+                        <input class="filterChkbox col-md-1" name="magicres" type="checkbox" data-filter='["SpellBlock"]' />
+                        <label for="jungle" class="col-lg-3 col-md-5">Jungle</label>
+                        <input class="filterChkbox col-md-1" name="jungle" type="checkbox" data-filter='["Jungle"]' />
+                        <label for="lowCost" class="col-lg-3 col-md-5">Gold Cost (Low)</label>
+                        <input class="costChkbox col-md-1" name="lowCost" type="checkbox" data-filter='[0,500]' />
+                        <label for="medCost" class="col-lg-3 col-md-5">Gold Cost (Medium)</label>
+                        <input class="costChkbox col-md-1" name="medCost" type="checkbox" data-filter='[501, 1600]' />
+                        <label for="highCost" class="col-lg-3 col-md-5">Gold Cost (Expensive)</label>
+                        <input class="costChkbox col-md-1" name="highCost" type="checkbox" data-filter='[1601, 9999]' />
+                    </div>
+                </div>
+
+                <div class="panel panel-warning">
+                    <div class="panel-heading"></div>
+                    <div class="panel-body item-panel">
+                        <div id="{{item.id}}" 
+                             data-tags="{{item.tags}}" 
+                             data-name="{{item.name}}" 
+                             data-gold="{{item.gold.total}}" 
+                             data-sell="{{item.gold.sell}}" 
+                             data-desc="{{item.sanitizedDescription}}" 
+                             class="item" 
+                             ng-repeat="item in items track by $index">
+                            <img src="http://ddragon.leagueoflegends.com/cdn/{{version}}/img/item/{{ item.id + '.png'}}" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-sm-6">
+        <div class="panel panel-warning">
+            <div class="panel-heading">
+                <h3 class="panel-title set-title">Item Set - Click to change title</h3>
+            </div>
+            <div class="panel-body block-panel">
+
+                <div class="panel panel-warning item-group">
+                    <div class="panel-heading">
+                        <h4 class="panel-title group-title">Item Group 1<span class="remove-group pull-right">X</span></h4>
+                    </div>
+                    <div class="droppable panel-body">
+
+                    </div>
+                </div>
+
+                <button id="addGroup" class="btn btn-success">Add Group</button>
+                <button id="download" class="btn btn-success">Download Item Set</button>
+
+            </div>
+
+        </div>
+    </div>
+
+    <div id="itemDetails">
+        <div>
+            <h4 id="itemDetailsName"></h4>
+            <p id="itemDetailsGold"></p>
+            <p id="itemDetailsDesc"></p>
+        </div>
+    </div>
+
+</div>
+<script src="content/scripts/loading.js"></script>
+<script src="content/scripts/setsUi.js"></script>
