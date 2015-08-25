@@ -59,16 +59,25 @@
                     </div>
                     <div class="panel-body">
                         <table>
-                            <tr>
-                                <td>
-                                    <img src="http://ddragon.leagueoflegends.com/cdn/5.16.1/img/champion/{{match.participants[0].championId}}.png"></td>
-                                <td>Hero Name</td>
- 
-                                <td>Items</td>
-                                <td>K/D/A</td>
-                                <td>Gold</td>
-                                <td>Duration</td>
-                                <td><button class="btn btn-primary">Get Item Set</button></td>
+                            <tr class="row">
+                                <td class="col-xs-2">
+                                    <img src="http://ddragon.leagueoflegends.com/cdn/5.16.1/img/item/{{match.participants[0].championId}}.png">
+                                    Hero Name
+                                </td>
+                                
+                                <td class="item col-xs-4">
+                                    <img class="item-icon" src="http://ddragon.leagueoflegends.com/cdn/5.16.1/img/item/{{match.participants[0].stats.item0}}.png">
+                                    <img class="item-icon" src="http://ddragon.leagueoflegends.com/cdn/5.16.1/img/item/{{match.participants[0].stats.item1}}.png">
+                                    <img class="item-icon" src="http://ddragon.leagueoflegends.com/cdn/5.16.1/img/item/{{match.participants[0].stats.item2}}.png">
+                                    <img class="item-icon" src="http://ddragon.leagueoflegends.com/cdn/5.16.1/img/item/{{match.participants[0].stats.item3}}.png">
+                                    <img class="item-icon" src="http://ddragon.leagueoflegends.com/cdn/5.16.1/img/item/{{match.participants[0].stats.item4}}.png">
+                                    <img class="item-icon" src="http://ddragon.leagueoflegends.com/cdn/5.16.1/img/item/{{match.participants[0].stats.item5}}.png">
+                                    <img class="item-icon" src="http://ddragon.leagueoflegends.com/cdn/5.16.1/img/item/{{match.participants[0].stats.item6}}.png">
+                                </td>
+                                <td class="col-xs-2">K/D/A</td>
+                                <td class="col-xs-1">Gold</tdclass>
+                                <td class="col-xs-1">Duration</tdclass>
+                                <td class="col-xs-2"><button class="btn btn-primary">Get Item Set</button></td>
                             </tr>
                         </table>
                     </div>
