@@ -1,102 +1,126 @@
 <title>Match History</title>
 
-<div class="col-sm-5">
-    <div class="panel panel-warning">
-        <div class="panel-heading">
-            <h3 class="panel-title">Search for a summoner to copy</h3>
-        </div>
-        <div class="panel-body">
-            <form class="" role="search" ng-submit="searchUser(userName)">
-                <input type="text" ng-model="userName" class="form-control col-xs-10" placeholder="Summoner name" id="search" required />
-                <!--<button class="btn btn-default col-xs-2" type="submit" ng-click="searchUser(userName)"><i class="glyphicon glyphicon-search"></i></button>-->
-            </form>
-        </div>
-
-    </div>
-
-    <!-- username, most recent matches -->
-    <div class="panel panel-warning">
-        <div class="panel-heading">
-            <span class="panel-title">{{recentDisplayName}}: {{userNameDisplay}}</span>
-        </div>
-        <div class="panel-body">
-            <div class="panel panel-warning" ng-repeat="match in recentMatches">
-                <div class="panel-heading">
-                    <h3 class="panel-title">{{match.queueType}} Region: {{match.region}}</h3>
-                </div>
-                <div class="panel-body">
-                    <span ng-repeat="image in getChampionImage(match.participants[0].championId)">
-                        <span>Champion: {{image.name}}</span>
-                    </span>
-                    <span>{{match.participants[0].stats.kills}}/{{match.participants[0].stats.deaths}}/{{match.participants[0].stats.assists}}</span>
-                </div>           
+<div class="row">
+    <div class="col-sm-5">
+        <div class="panel panel-warning">
+            <div class="panel-heading">
+                <h3 class="panel-title">Search for a Summoner</h3>
             </div>
-        </div>
-    </div>
-
-
-</div>
-
-<div class="col-sm-7">
-    <div class="panel panel-warning">
-        <div class="panel-heading">
-            <h3 class="panel-title">View by champion</h3>
-        </div>
-        <div class="panel-body">
             <div class="panel-body">
-                <div class="hero-format2 top-panel">
-                    <button class="btn btn-default hero-format container" id="modalButton" data-toggle="modal" data-target="#myModal" ng-repeat="hero in heroes" ng-click="matchDetails(hero.id)">
-                        <img class="hero-img-format" ng-src="http://ddragon.leagueoflegends.com/cdn/5.16.1/img/champion/{{hero.key}}.png" alt="Hero Image" />
-                        <span class="heroContainerSpan">{{hero.name}}</span>
-                    </button>
-                </div>
-            </div>     
-        </div>
-    </div>  
-</div>
-
-<!-- Modal content-->
-<div class="modal modal-wide fade" id="myModal" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" ng-click="modalClose()" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Match History {{heroMatchResults}}</h4>
-            </div>
-            <div class="modal-body container" id="bg-image">
-                <div>
-                    <table class="table-layout">
-                        <tr class="table-row" ng-repeat="heroMatch in heroMatches">
-                            <td class="smTab">
-                                <img class="hero-img-format bottom-padding"
-                                     ng-repeat="heroImage in getChampionImage(heroMatch.participants[0].championId)"
-                                     ng-src="http://ddragon.leagueoflegends.com/cdn/5.16.1/img/champion/{{heroImage.key + '.png'}}" alt="Hero Image" />
-                            <td class="smTab">{{heroMatch.queueType}}</td>
-                            </td>
-
-                            <td class="">
-                                <img class="item-img-format" ng-repeat="items in getItemListPerMatch(heroMatch.participants[0].stats) track by $index" preload-image
-                                     fallback-image="http://ddragon.leagueoflegends.com/cdn/4.2.6/img/item/{{items}}.png"
-                                     ng-src="http://ddragon.leagueoflegends.com/cdn/5.16.1/img/item/{{items}}.png" alt="item image" />
-                            </td>
-
-                            <td><a class="btn btn-primary" href="#">Modify set</a></td>
-
-                            <!-- k/d/a -->
-                            <td>{{heroMatch.participants[0].stats.kills}}/{{heroMatch.participants[0].stats.deaths}}/{{heroMatch.participants[0].stats.assists}}</td>
-
-                            <!-- w/l -->
-                            <td class="tabRight">{{heroMatch.participants[0].stats.winner}}</td>
-                        </tr>
-                    </table>
+                <div class="panel-body">
+                    <form ng-submit="searchUser(userName)">
+                        <label>Name:</label>
+                        <input type="text" ng-model="userName" class="form-control" placeholder="Summoner name" id="search" required />
+                        <br />
+                        <label>Region:</label>
+                        <select name="region" class="form-control">
+                            <option>NA</option>
+                            <option>EUNE</option>
+                            <option>EUW</option>
+                            <option>OSC</option>
+                        </select>
+                        <br /><br />
+                        <button class="btn btn-success pull-right">Search</button>
+                    </form>
                 </div>
             </div>
-
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" ng-click="modalClose()" data-dismiss="modal">Close</button>
-            </div>
-
         </div>
+    </div>
 
+    <div class="col-sm-7">
+        <div class="panel panel-warning">
+            <div class="panel-heading">
+                <h3 class="panel-title">Match History by Champion</h3>
+            </div>
+            <div class="panel-body">
+                <div class="panel-body">
+                    <input id="searchChampions" class="search form-control" type="text" placeholder="Filter Champions" />
+                    <div class="hero-format2 champion-panel">
+                        <div class="champion-icon" id="modalButton" data-name="{{hero.name}}" data-toggle="modal" data-target="#myModal" ng-repeat="hero in heroes" ng-click="matchDetails(hero.id)">
+                            <img class="hero-img-format" ng-src="http://ddragon.leagueoflegends.com/cdn/5.16.1/img/champion/{{hero.key}}.png" alt="Hero Image" />
+                            <span class="mouseOver">{{hero.name}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-12">
+        <!-- username, most recent matches -->
+        <div class="panel panel-warning stretch-bg">
+            <div class="panel-heading">
+                <span class="panel-title">{{recentDisplayName}} {{userNameDisplay}}</span>
+            </div>
+            <div class="panel-body">
+                <div class="panel panel-warning" ng-repeat="match in recentMatches">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"> {{mapNames[match.mapId]}} -- {{match.matchCreation | date:'medium'}}</h3>
+                    </div>
+                    <div class="panel-body">
+                        <table>
+                            <tr>
+                                <td>
+                                    <img src="http://ddragon.leagueoflegends.com/cdn/5.16.1/img/champion/{{match.participants[0].championId}}.png"></td>
+                                <td>Hero Name</td>
+ 
+                                <td>Items</td>
+                                <td>K/D/A</td>
+                                <td>Gold</td>
+                                <td>Duration</td>
+                                <td><button class="btn btn-primary">Get Item Set</button></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal content-->
+    <div class="modal modal-wide fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" ng-click="modalClose()" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Match History {{heroMatchResults}}</h4>
+                </div>
+                <div class="modal-body container" id="bg-image">
+                    <div>
+                        <table class="table-layout">
+                            <tr class="table-row" ng-repeat="heroMatch in heroMatches">
+                                <td class="smTab">
+                                    <img class="hero-img-format bottom-padding"
+                                         ng-repeat="heroImage in getChampionImage(heroMatch.participants[0].championId)"
+                                         ng-src="http://ddragon.leagueoflegends.com/cdn/5.16.1/img/champion/{{heroImage.key + '.png'}}" alt="Hero Image" />
+                                <td class="smTab">{{heroMatch.queueType}}</td>
+                                </td>
+
+                                <td class="">
+                                    <img class="item-img-format" ng-repeat="items in getItemListPerMatch(heroMatch.participants[0].stats) track by $index" preload-image
+                                         fallback-image="http://ddragon.leagueoflegends.com/cdn/4.2.6/img/item/{{items}}.png"
+                                         ng-src="http://ddragon.leagueoflegends.com/cdn/5.16.1/img/item/{{items}}.png" alt="item image" />
+                                </td>
+
+                                <td><a class="btn btn-primary" href="#">Modify set</a></td>
+
+                                <!-- k/d/a -->
+                                <td>{{heroMatch.participants[0].stats.kills}}/{{heroMatch.participants[0].stats.deaths}}/{{heroMatch.participants[0].stats.assists}}</td>
+
+                                <!-- w/l -->
+                                <td class="tabRight">{{heroMatch.participants[0].stats.winner}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" ng-click="modalClose()" data-dismiss="modal">Close</button>
+                </div>
+
+            </div>
+        </div>
     </div>
 </div>
+
+<script src="/content/scripts/matchUi.js"></script>

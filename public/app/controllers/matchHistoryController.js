@@ -1,6 +1,12 @@
 (function(){
 	var matchHistoryController = function($scope, $meteor, championService, matchService){
 
+	    $scope.summonerResult = false;
+
+	    $scope.mapNames = {
+            '1': "Summoner's Rift",
+	    };
+
 		var onComplete = function (response) {
             $scope.heroes = championService.heroSort(response.data);
 			championService.heroList = $scope.heroes;		
@@ -83,14 +89,13 @@
 				return /\s/g.test(s);
 			}
 
-
 			$scope.recentMatches = undefined;
 			if(!hasWhiteSpace(userName)){
 				if($scope.userName){
 					matchService.getUserId(userName).then(function(data){
 						if(data != undefined){
 							$scope.userName = userName.toLowerCase();
-							
+							$scope.summonerResult = true;
 							$scope.userId = data[$scope.userName].id;					
 							
 							matchService.getRecentMatchDetails($scope.userId).then(function(data){					
@@ -102,24 +107,18 @@
 						} else{
 							$scope.recentDisplayName = "";
 							$scope.userNameDisplay = "Invalid username";							
-							$scope.userId = undefined;
-							
-						}
-						
+							$scope.userId = undefined;							
+						}						
 					});
 				}
 			}else{
 				$scope.recentDisplayName = "";
 				$scope.userNameDisplay = "Invalid username";
-				$scope.userId = undefined;
-				
-				
-				
+				$scope.userId = undefined;												
 			}
 		}		
 	};	
 	
-	angular.module("app").controller("matchHistoryController", ["$scope", "$meteor", "championService","matchService", matchHistoryController]);
-	
-	
+	angular.module("app").controller("matchHistoryController", ["$scope", "$meteor", "championService", "matchService", matchHistoryController]);
+
 }());

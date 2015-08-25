@@ -217,6 +217,7 @@ ul li{
 }
 .panel-body{
     background: url(/content/images/brown-paper.jpg);
+    background-size: cover;
 }
 
 .panel-body .panel-body{
@@ -249,4 +250,9 @@ ul li{
 
 .hover-off{
     pointer-events: none;
+}
+
+.champion-panel{
+    height: 178px;
+    overflow-y: scroll;
 }

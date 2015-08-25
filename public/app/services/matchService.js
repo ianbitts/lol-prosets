@@ -5,6 +5,7 @@
 		var getRecentMatchDetails = function(userId){
 		    return $meteor.call("GetRecentMatchDetails", userId).then(
                 function (response) {
+                    console.log(response.data);
 				    return response.data;
                 },
                 function () { return undefined; });
@@ -14,6 +15,7 @@
 
 		    return $meteor.call("GetHeroMatchDetails", userId, heroId).then(
                 function (response) {
+                    console.log(response.data);
 				    return response.data;
 			    });
 		}
@@ -21,7 +23,6 @@
 		var getUserId = function (userName) {
 
 		    return $meteor.call("GetUserId", userName).then(function (response) {
-		        console.log(response);
 				return response.data;
 			},
             function () {
