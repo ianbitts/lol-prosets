@@ -1,7 +1,8 @@
 (function(){
     
-    var setsController = function($scope, $meteor, championService, itemService) {
-
+    var setsController = function($scope, $meteor, $routeParams, championService, itemService) {
+        console.log($routeParams.userId);
+        console.log($routeParams.matchId);
         $scope.heroes = [];
         $scope.items = [];
         $scope.maps = [];
@@ -37,6 +38,6 @@
         
     };
     
-    angular.module("app").controller("setsController", ["$scope", "$meteor", "championService", "itemService", setsController]);    
+    angular.module("app").controller("setsController", ["$scope", "$meteor", "$routeParams", "championService", "itemService", setsController]);    
     
 }());

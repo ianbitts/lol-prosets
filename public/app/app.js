@@ -10,7 +10,7 @@
             controller: "championsController"
 
         })
-        .when("/sets", {
+        .when("/sets/summoner=:userId/match=:matchId", {
             templateUrl: "app/views/sets.html",
             controller: "setsController",
         })

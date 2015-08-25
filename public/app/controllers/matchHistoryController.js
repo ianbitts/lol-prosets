@@ -1,11 +1,23 @@
 (function(){
-	var matchHistoryController = function($scope, $meteor, championService, matchService){
+	var matchHistoryController = function($scope, $meteor, $location, championService, matchService){
 
 	    $scope.summonerResult = false;
-
+	    $scope.validation = "";
 	    $scope.mapNames = {
-            '1': "Summoner's Rift",
+	        '1': "Summoner's Rift",
+	        '11': "Summoner's Rift",
+	        '10': "Twisted Treeline",
+            '12': "Howling Abyss"
+
 	    };
+
+	    //	    $scope.regions = ["br", "eune", "euw", "kr", "lan", "las", "na", "oce", "ru", "tr"];
+	    $scope.regions = [
+            { region: "br", name: "Brazil" }, { region: "eune", name: "Europe Nordic & East" }, { region: "euw", name: "Europe West" },
+            { region: "lan" , name:"Latin America North" }, { region: "las" ,name: "Latin America South"},
+            { region: "na", name:"North America" }, { region: "oce" , name:"Oceania" }, { region: "ru"  ,name: "Russia"},
+            { region: "kr", name:"Republic of Korea" },{ region: "tr", name:"Turkey" }];
+
 
 		var onComplete = function (response) {
             $scope.heroes = championService.heroSort(response.data);
@@ -84,7 +96,8 @@
 		}
 	
 	
-		$scope.searchUser = function(userName){
+		$scope.searchUser = function (userName, region) {
+		    
 			function hasWhiteSpace(s) {
 				return /\s/g.test(s);
 			}
@@ -92,33 +105,51 @@
 			$scope.recentMatches = undefined;
 			if(!hasWhiteSpace(userName)){
 				if($scope.userName){
-					matchService.getUserId(userName).then(function(data){
+				    matchService.getUserId(userName).then(function (data) {
 						if(data != undefined){
-							$scope.userName = userName.toLowerCase();
+						    $scope.userName = userName;
 							$scope.summonerResult = true;
-							$scope.userId = data[$scope.userName].id;					
+							$scope.userId = data[$scope.userName.toLowerCase()].id;					
 							
-							matchService.getRecentMatchDetails($scope.userId).then(function(data){					
-								$scope.recentDisplayName = "Recent matches";
-								$scope.userNameDisplay = $scope.userName;
-								$scope.recentMatches = matchService.recentMatchSort(data.matches);	
+							matchService.getRecentMatchDetails($scope.userId, region.region).then(function (matchData) {
+							    console.log(matchData);
+							    if (matchData != null)
+							    {
+							        $scope.recentDisplayName = "Recent matches:";
+							        $scope.userNameDisplay = $scope.userName;
+							        $scope.validation = "";
+							        $scope.recentMatches = matchService.recentMatchSort(matchData.matches);
+							    }
+							    else
+							    {
+							        $scope.validation = "No ranked games on this account";
+							    }
 								
 							});
 						} else{
 							$scope.recentDisplayName = "";
-							$scope.userNameDisplay = "Invalid username";							
+							$scope.validation = "Invalid username";							
 							$scope.userId = undefined;							
 						}						
 					});
 				}
 			}else{
 				$scope.recentDisplayName = "";
-				$scope.userNameDisplay = "Invalid username";
+				$scope.validation = "Invalid username";
 				$scope.userId = undefined;												
 			}
-		}		
+		}
+
+
+		$scope.getHeroItemSet = function (matchId){
+
+		    console.log(matchId);
+		    console.log($scope.userId);
+		    var url = "/sets/summoner=" + $scope.userId + "/match=" + matchId;
+		    $location.path(url);
+		}
 	};	
 	
-	angular.module("app").controller("matchHistoryController", ["$scope", "$meteor", "championService", "matchService", matchHistoryController]);
+	angular.module("app").controller("matchHistoryController", ["$scope", "$meteor", "$location", "championService", "matchService", matchHistoryController]);
 
 }());

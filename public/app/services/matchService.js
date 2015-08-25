@@ -2,8 +2,8 @@
 
     var matchService = function ($meteor) {
 
-		var getRecentMatchDetails = function(userId){
-		    return $meteor.call("GetRecentMatchDetails", userId).then(
+		var getRecentMatchDetails = function(userId, region){
+		    return $meteor.call("GetRecentMatchDetails", userId, region).then(
                 function (response) {
                     console.log(response.data);
 				    return response.data;
@@ -22,7 +22,7 @@
 
 		var getUserId = function (userName) {
 
-		    return $meteor.call("GetUserId", userName).then(function (response) {
+		    return $meteor.call("GetUserId", userName.toLowerCase()).then(function (response) {
 				return response.data;
 			},
             function () {
