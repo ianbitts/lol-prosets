@@ -8,10 +8,10 @@
         $scope.maps = [];
         $scope.version = "5.16.1";
         
-        var starting_item_seperation = 60000;    // 1 minute for starting items
-        var early_game_range = [60001, 720000];  // 1 minute to 12 minutes.
-        var mid_game_range = [720001, 1560000]   // 12 minutes to 26 minutes for mid game
-        var late_game_range = [1560000, 9999999999999 ] // 26 mins+ for late game
+        var starting_item_threshold = 60000;    // 1 minute for starting items
+        var early_game_threshold = 720000;  // 1 minute to 12 minutes.
+        var mid_game_threshold = 1560000;   // 12 minutes to 26 minutes for mid game
+
         var onComplete = function (response) {
             $scope.heroes = championService.heroSort(response.data);
         };
@@ -41,7 +41,7 @@
             {
                 if (participantInfo[index].player.summonerId == summonerId)
                 {
-                    return { 'index': index, 'id': participantInfo[index].participantId };
+                    return { 'index': index, 'id': participantInfo[index].participantId, 'name': participantInfo[index].player.summonerName };
                 }
             }
         }
@@ -51,10 +51,22 @@
             console.log(match);
             var participant = findParticipant(match.participantIdentities, $routeParams.userId);
             var championId = match.participants[participant.index].championId;
+            
             var blocks = [];
-            var block_events = [];
+            var buys = [];
+            var sells = [];
+            var starting_purchases = [];
+            var starting_sells = [];
+            var early_game_purchases = [];
+            var early_game_sells = [];
+            var mid_game_purchases = [];
+            var mid_game_sells = [];
+            var late_game_purchases = [];
+            var late_game_sells = [];
+
             var frames = match.timeline.frames;
 
+            // Digest timeline information
             for (var index in frames)
             {
                 if (frames[index].events != null)
@@ -62,25 +74,126 @@
                     var events = frames[index].events
                     for (var eventIndex in events)
                     {
-                        if (events[eventIndex].participantId == participant.id && events[eventIndex].eventType == "ITEM_PURCHASED")
+                        if (events[eventIndex].participantId == participant.id)
                         {
-                            if (block_events.length == 0 || (events[eventIndex].timestamp - block_events[0].timestamp) < block_seperation_duration )
+                            if (events[eventIndex].timestamp < starting_item_threshold)
                             {
-                                block_events.push(events[eventIndex]);
+                                if (events[eventIndex].eventType == "ITEM_PURCHASED")
+                                {
+                                    starting_purchases.push(events[eventIndex]);
+                                }
+                                else if (events[eventIndex].eventType == "ITEM_SOLD" || events[eventIndex].eventType == "ITEM_DESTROYED")
+                                {
+                                    starting_destroys.push(events[eventIndex]);
+                                }          
+                            }
+                            else if (events[eventIndex].timestamp < early_game_threshold)
+                            {
+                                if (events[eventIndex].eventType == "ITEM_PURCHASED")
+                                {
+                                    early_game_purchases.push(events[eventIndex]);
+                                }
+                                else if (events[eventIndex].eventType == "ITEM_SOLD" || events[eventIndex].eventType == "ITEM_DESTROYED")
+                                {
+                                    early_game_sells.push(events[eventIndex]);
+                                }
+                            }
+                            else if (events[eventIndex].timestamp < mid_game_threshold)
+                            {
+                                if (events[eventIndex].eventType == "ITEM_PURCHASED")
+                                {
+                                    mid_game_purchases.push(events[eventIndex]);
+                                }
+                                else if (events[eventIndex].eventType == "ITEM_SOLD" || events[eventIndex].eventType == "ITEM_DESTROYED")
+                                {
+                                    mid_game_sells.push(events[eventIndex]);
+                                }
                             }
                             else
                             {
-                                blocks.push(block_events);
-                                block_events = [];
+                                if (events[eventIndex].eventType == "ITEM_PURCHASED") {
+                                    late_game_purchases.push(events[eventIndex]);
+                                }
+                                else if (events[eventIndex].eventType == "ITEM_SOLD" || events[eventIndex].eventType == "ITEM_DESTROYED") {
+                                    late_game_sells.push(events[eventIndex]);
+                                }
                             }
                         }
                     }
                 }
             }
-            $scope.blocks = blocks;
-        }
-        var loadDefaults = function () {
 
+            buys.push(starting_purchases);
+            buys.push(early_game_purchases);
+            buys.push(mid_game_purchases);
+            buys.push(late_game_purchases);
+
+            sells.push(starting_sells);
+            sells.push(early_game_sells);
+            sells.push(mid_game_sells);
+            sells.push(late_game_sells);
+
+            var starting_block = [];
+            var early_block = [];
+            var mid_block = [];
+            var late_block = [];
+
+            blocks.push(starting_block);
+            blocks.push(early_block);
+            blocks.push(mid_block);
+            blocks.push(late_block);
+
+            for (var i in buys)
+            {
+                for (var eventIndex in buys[i])
+                {
+                    var add = true;
+                    var item = buys[i][eventIndex].itemId;
+                    for (var sellIndex in sells[i])
+                    {
+                        if (item == sells[i][sellIndex].itemId)
+                        {
+                            add = false;
+                        }
+                    }
+                    if (add)
+                    {
+                        blocks[i].push(buys[i][eventIndex]);
+                    }
+                }
+            }
+
+            // Set item blocks
+            $scope.blocks = blocks;
+            $scope.blockTitles = ["Starting Items", "Early Game", "Mid Game", "Late Game"];
+
+            // Set Map
+            if (match.mapId == 1 || match.mapId == 2 || match.mapId == 11)
+            {
+                angular.element("div#mapSR").removeClass("btn-warning");
+                angular.element("div#mapSR").addClass("btn-success");
+            }
+            else if (match.mapId == 4 || match.mapId == 10)
+            {
+                angular.element("div#mapTT").removeClass("btn-warning");
+                angular.element("div#mapTT").addClass("btn-success");
+            }
+            else if (match.mapId == 12 || match.mapId == 14) {
+                angular.element("div#mapHA").removeClass("btn-warning");
+                angular.element("div#mapHA").addClass("btn-success");
+            }
+
+            // Set Champion and Set Title
+            angular.element("#hero" + championId).addClass("champion-selected");
+            var championName = angular.element("#hero" + championId).data('name');
+            $scope.setTitle = championName + " by " + participant.name;
+        }
+
+        var loadDefaults = function ()
+        {
+            $scope.blocks = [null];
+            $scope.blockTitles = ["Item Block 1 - Click to change title"];
+            $scope.setTitle = "New Item Set - Click to change title";
         }
 
         $meteor.call("GetMapData").then(mapsComplete);

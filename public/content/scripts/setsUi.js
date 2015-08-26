@@ -3,7 +3,7 @@
     var draggable_enabled = false;
     
     $(document).ready(function () {
-        waitingDialog.show('Please wait...');
+        waitingDialog.show('Loading Item and Match data...');
         setTimeout(function () {
             waitingDialog.hide();
             $("div.item").draggable({
@@ -215,49 +215,80 @@
 
     // Build JSON and send to server
     $("#download").click(function () {
-        var JSON = '{ "champions" : [ ';
+
+        var set_json = '{ "champions" : [ ';
 
         $(".champion-selected").each(function (index, element) {
-            JSON += '"' + $(element).data('key') + '"';
+            set_json += '"' + $(element).data('key') + '"';
             if (index < $(".champion-selected").length - 1)
             {
-                JSON += ',';
+                set_json += ',';
             }
         })
-        JSON += '], "page" : {';
-        JSON += '"title" : "' + $(".set-title").text() + '", ',
-        JSON += '"type" : "custom", ',
-        JSON += '"map" : "' + $(".map.btn-success").data('map') + '", ';
-        JSON += '"mode" : "any", ';
-        JSON += '"blocks" : [ ';
+        set_json += '], "page" : {';
+        set_json += '"title" : "' + $(".set-title").text() + '", ',
+        set_json += '"type" : "custom", ',
+        set_json += '"map" : "' + $(".map.btn-success").data('map') + '", ';
+        set_json += '"mode" : "any", ';
+        set_json += '"blocks" : [ ';
         $("div.item-group").each(function (index, element) {
             var title = $(element).children("div.panel-heading").children("h4.group-title").text();
-            JSON += '{ "type" : "' + title.substring(0, title.length - 1) + '", ';
-            JSON += '"items" : [ ';
+            set_json += '{ "type" : "' + title.substring(0, title.length - 1) + '", ';
+            set_json += '"items" : [ ';
             var items = $(element).children(".panel-body").children("div");
             items.each(function (i, item) {
-                JSON += '{ "id" : "' + $(item).attr('id') + '", "count" : 0 }';
+                set_json += '{ "id" : "' + $(item).attr('id') + '", "count" : 0 }';
                 if (i < items.length - 1)
                 {
-                    JSON += ",";
+                    set_json += ",";
                 }
             });
-            JSON += "]}";
+            set_json += "]}";
             if (index < $("div.item-group").length - 1)
             {
-                JSON += ",";
+                set_json += ",";
             }
         });
-        JSON += "]}}";
-        console.log(JSON);
-
-        Meteor.call('ExportSetFile', JSON, function (error, response) {
-            if (error == null)
+        set_json += "]}}";
+        validate_json = JSON.parse(set_json);
+        var validated = true;
+        var validation_message = "";
+        if (validate_json.page.map == undefined)
+        {
+            validated = false;
+            $("#noMap").show();
+        }
+        if (validate_json.page.blocks.length == 0) 
+        {
+            validated = false;
+            $("#noBlocks").show();
+        }
+        else
+        {
+            for (var blockIndex in validate_json.page.blocks)
             {
-                var zipFile = ConvertToBlob(response);
-                saveAs(blob, $(".set-title").text() + '.zip');
+                if (validate_json.page.blocks[blockIndex].items.length == 0)
+                {
+                    validated = false;
+                    $("#noItems").show();
+                    break;
+                }
             }
-        });
+        }
+        if (validated)
+        {
+            Meteor.call('ExportSetFile', set_json, function (error, response) {
+                if (error == null) {
+                    var zipFile = ConvertToBlob(response);
+                    saveAs(blob, $(".set-title").text() + '.zip');
+                }
+            });
+        }
+        else {
+            var html = '<div class="alert alert-danger"><span class="glyphicon glyphicon-exclamation-sign">  </span>' + validation_message + '</div>'
+            $("#download").after(html);
+        }
+        
     });
     
     $("body").on('click', 'h4.group-title', function (event) {
