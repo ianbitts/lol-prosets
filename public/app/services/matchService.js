@@ -20,8 +20,8 @@
 			    });
 		}
 
-		var getUserId = function (userName) {
-
+		var getUserId = function (userName) { 
+            
 		    return $meteor.call("GetUserId", userName.toLowerCase()).then(function (response) {
 				return response.data;
 			},
