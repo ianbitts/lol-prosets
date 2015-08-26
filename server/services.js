@@ -7,8 +7,13 @@ if (Meteor.isServer) {
         GetItemList: function () {
             this.unblock();
             var url = "https://global.api.pvp.net/api/lol/static-data/na/v1.2/item?version=5.16.1&itemListData=all&api_key=fc9cb83e-8c1d-488a-b71c-52c65f9ae015";
-            var result = HTTP.call("GET", url);
-            return result;
+            return HTTP.call("GET", url);
+        },
+
+        GetMatchDetails: function (matchId) {
+            this.unblock();
+            var url = "https://na.api.pvp.net/api/lol/na/v2.2/match/" + matchId + "?includeTimeline=true&api_key=fc9cb83e-8c1d-488a-b71c-52c65f9ae015";
+            return HTTP.call("GET", url);
         },
 
         GetRecentMatchDetails: function (userId, region) {

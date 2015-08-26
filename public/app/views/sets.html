@@ -1,3 +1,5 @@
+<title>Item Set Builder -- LoL Pro Sets</title>
+
 <div class="row">
     <div class="col-sm-4">
         <div class="panel panel-warning mm-panel">
@@ -115,12 +117,23 @@
             </div>
             <div class="panel-body block-panel">
 
-                <div class="panel panel-warning item-group">
+                <div ng-repeat="block in blocks" class="panel panel-warning item-group">
                     <div class="panel-heading">
-                        <h4 class="panel-title group-title">Item Group 1<span class="remove-group pull-right">X</span></h4>
+                        <h4 class="panel-title group-title">Game Time: {{block[0].timestamp/1000/60 | number: 0 }}:{{(block[0].timestamp/1000%60 < 10)?0:""}}{{block[0].timestamp/1000%60 | number: 0}} <span class="remove-group pull-right">X</span></h4>
                     </div>
                     <div class="droppable panel-body">
-
+                        <div id="{{itemData[item.itemId].id}}"
+                             data-tags="{{itemData[item.itemId].tags}}"
+                             data-name="{{itemData[item.itemId].name}}"
+                             data-gold="{{itemData[item.itemId].gold.total}}"
+                             data-sell="{{itemData[item.itemId].gold.sell}}"
+                             data-desc="{{itemData[item.itemId].sanitizedDescription}}"
+                             class="item"
+                             ng-repeat="item in block track by $index">
+                            <img preload-image
+                                 data-fallback-image="http://ddragon.leagueoflegends.com/cdn/4.2.6/img/item/{{item.itemId}}.png"
+                                 ng-src="http://ddragon.leagueoflegends.com/cdn/5.16.1/img/item/{{item.itemId}}.png" alt="item image" />
+                        </div>
                     </div>
                 </div>
 
