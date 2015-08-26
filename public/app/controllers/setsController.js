@@ -8,8 +8,10 @@
         $scope.maps = [];
         $scope.version = "5.16.1";
         
-        var block_seperation_duration = "60000"; // 60 second duration for one block
-            
+        var starting_item_seperation = 60000;    // 1 minute for starting items
+        var early_game_range = [60001, 720000];  // 1 minute to 12 minutes.
+        var mid_game_range = [720001, 1560000]   // 12 minutes to 26 minutes for mid game
+        var late_game_range = [1560000, 9999999999999 ] // 26 mins+ for late game
         var onComplete = function (response) {
             $scope.heroes = championService.heroSort(response.data);
         };
