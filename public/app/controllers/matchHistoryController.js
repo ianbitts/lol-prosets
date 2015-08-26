@@ -46,15 +46,16 @@
 			
 			if($scope.userName != undefined){
 				
-				$scope.heroMatches = "";
+			    $scope.recentMatches = "";
 				matchService.getHeroMatchDetails($scope.userId, heroId).then(function(data){
-					
+				    debugger;
 					if(isEmpty(data.matches)){
-						$scope.heroMatchResults = ": No matches found";
+					    $scope.heroMatchResults = ": No matches found";
+					    
 						data = undefined;
 					}else{
 						$scope.heroMatchResults = "";
-						$scope.heroMatches =  matchService.recentMatchSort(data.matches);
+						$scope.recentMatches = matchService.recentMatchSort(data.matches);
 					}		
 				});
 				
@@ -97,47 +98,51 @@
 	
 	
 		$scope.searchUser = function (userName, region) {
+		    console.log(region);
 		    
 			function hasWhiteSpace(s) {
 				return /\s/g.test(s);
 			}
+			
+			if($scope.userName){
 
-			$scope.recentMatches = undefined;
-			if(!hasWhiteSpace(userName)){
-				if($scope.userName){
-				    matchService.getUserId(userName).then(function (data) {
-						if(data != undefined){
-						    $scope.userName = userName;
-							$scope.summonerResult = true;
-							$scope.userId = data[$scope.userName.toLowerCase()].id;					
-							
-							matchService.getRecentMatchDetails($scope.userId, region.region).then(function (matchData) {
-							    console.log(matchData);
-							    if (matchData != null)
-							    {
-							        $scope.recentDisplayName = "Recent matches:";
-							        $scope.userNameDisplay = $scope.userName;
-							        $scope.validation = "";
-							        $scope.recentMatches = matchService.recentMatchSort(matchData.matches);
-							    }
-							    else
-							    {
-							        $scope.validation = "No ranked games on this account";
-							    }
+			    matchService.getUserId(userName.replace(/\s/g, '')).then(function (data) {
+			    		if(data != undefined){
+			    			$scope.userName = userName;
+			    			$scope.summonerResult = true;
+			    			$scope.userId = data[$scope.userName.replace(/\s/g, '').toLowerCase()].id;
+			    			$scope.userNameDisplay = data[$scope.userName.replace(/\s/g, '').toLowerCase()].name; 
+			    			
+			    			console.log(data);
+
+			    			matchService.getRecentMatchDetails($scope.userId, region.region).then(function (matchData) {
+			    				console.log(matchData);
+			    				if (matchData != null)
+			    				{
+			    				    $scope.recentDisplayName = "Recent matches:";
+			    				    
+			    				    $scope.validation = "";
+			    				    $scope.recentMatches = matchService.recentMatchSort(matchData.matches);
+			    				}
+			    				else
+			    				{
+			    				    $scope.validation = "No ranked games on this account";
+			    				}
 								
-							});
-						} else{
-							$scope.recentDisplayName = "";
-							$scope.validation = "Invalid username";							
-							$scope.userId = undefined;							
-						}						
-					});
-				}
+			    			});
+			    		} else{
+			    			$scope.recentDisplayName = "";
+			    			$scope.validation = "Invalid username";							
+			    			$scope.userId = undefined;							
+			    		}						
+			    	});
 			}else{
-				$scope.recentDisplayName = "";
-				$scope.validation = "Invalid username";
-				$scope.userId = undefined;												
-			}
+			    $scope.recentDisplayName = "";
+			    $scope.validation = "Invalid username";
+			    $scope.userId = undefined;												
+		    }
+
+			
 		}
 
 
