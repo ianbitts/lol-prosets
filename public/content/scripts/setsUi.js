@@ -13,7 +13,14 @@
                     ui.helper.addClass("hover-off");
                 }
             });
-        }, 3000);
+            $(".droppable").droppable({
+                accept: "div.item",
+                drop: function (event, ui) {
+                    $(this).find(".placeholder").remove();
+                    $(ui.draggable).clone().appendTo(this);
+                }
+            });
+        }, 4000);
     });
 
     $("body").on('click', '.remove-group', function (event) {
@@ -184,14 +191,6 @@
         $(event.target).remove();
         $("#itemDetails").fadeOut();
     })
-
-    $(".droppable").droppable({
-        accept: "div.item",
-        drop: function (event, ui) {
-            $(this).find(".placeholder").remove();
-            $(ui.draggable).clone().appendTo(this);
-        }
-    });
 
     $("#addGroup").click(function () {
         var HTML = '<div class="panel panel-warning item-group"><div class="panel-heading"><h4 class="panel-title group-title">Click to change title<span class="remove-group pull-right">X</span></h4>';

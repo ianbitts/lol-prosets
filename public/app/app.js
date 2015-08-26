@@ -14,11 +14,15 @@
             templateUrl: "app/views/sets.html",
             controller: "setsController",
         })
+        .when("/sets/", {
+            templateUrl: "app/views/sets.html",
+            controller: "setsController",
+        })
         .when("/matchHistory", {
-                templateUrl: "app/views/matchHistory.html",
-                controller: "matchHistoryController"
+            templateUrl: "app/views/matchHistory.html",
+            controller: "matchHistoryController"
 
-            })
+        })
 		.when("/about", {
 		    templateUrl: "app/views/about.html"
 		    //,controller: "matchHistoryController"
@@ -32,7 +36,7 @@
         return {
             link: function (scope, element, attrs) {
                 element.bind('error', function () {
-                    
+
                     if (attrs.src != attrs.errImg) {
                         element[0].src = "/content/images/" + scope.hero.key + ".png";
                     }
