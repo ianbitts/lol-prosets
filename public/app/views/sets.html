@@ -37,7 +37,7 @@
                 <div class="panel-body">
                     <input id="searchChampions" class="search form-control" type="text" placeholder="Search Champions" />
                     <div class="top-panel">
-                        <div id="hero{{hero.id}}" data-key="{{hero.key}}" class="champion-icon" data-ng-repeat="hero in heroes" data-name="{{hero.name}}">
+                        <div id="hero{{hero.id}}" data-key="{{hero.key}}" class="champion-icon selectable" data-ng-repeat="hero in heroes" data-name="{{hero.name}}">
                             <img class="hero-img-format" data-err-img
                                  ng-src="http://ddragon.leagueoflegends.com/cdn/{{version}}/img/champion/{{hero.key + '.png'}}" alt="Hero Image" />
                             <span class="mouseOver">{{hero.name}}</span>
@@ -62,7 +62,6 @@
                     </div>
                     <div class="panel-body">
                         <input id="searchItems" type="text" class="search form-control" placeholder="Search Items" />
-
                         <label for="consumable" class="col-lg-3 col-md-5">Consumables</label>
                         <input class="filterChkbox col-md-1" name="consumables" type="checkbox" data-filter='["Consumable"]' />
                         <label for="boots" class="col-lg-3 col-md-5">Boots</label>
@@ -148,9 +147,7 @@
                 <div id="noItems" class="alert alert-danger alert-hidden">
                     <span class="glyphicon glyphicon-exclamation-sign">  </span> Each block must contain at least one item
                 </div>
-
             </div>
-
         </div>
     </div>
 
