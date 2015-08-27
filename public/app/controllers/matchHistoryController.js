@@ -55,7 +55,7 @@
 						data = undefined;
 					}else{
 						$scope.heroMatchResults = "";
-						$scope.recentMatches = matchService.recentMatchSort(data.matches);
+						$scope.recentMatches = $filter('orderBy')(matchService.recentMatchSort(data.matches), "matchCreation", true);
 					}		
 				});
 				
@@ -112,7 +112,6 @@
 			    			$scope.summonerResult = true;
 			    			$scope.userId = data[$scope.userName.replace(/\s/g, '').toLowerCase()].id;
 			    			$scope.userNameDisplay = "";
-
 
 			    			matchService.getRecentMatchDetails($scope.userId, region.region).then(function (matchData) {
 			    				if (matchData != null)
