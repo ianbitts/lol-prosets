@@ -278,9 +278,7 @@ ul li{
 .smTab{	padding-left:1em;}
 
 .absolute-position{
-	
     position:absolute;
-
 }
 .validation-message{
     color: red;
@@ -289,5 +287,35 @@ ul li{
 }
 .center-text-align{
     text-align:center; 
-    
+}
+.alert-hidden{
+    opacity: 0;
+	padding:0;
+    margin:0;
+    height:0;
+}
+
+.hide-alert{
+    animation: .25s alertFadeIn ease reverse;
+}
+.show-alert{
+    animation: .25s alertFadeIn ease;
+}
+
+@keyframes alertFadeIn {
+  0% {
+    opacity: 0;
+	line-height:0px;
+    height:0px;
+	padding-top:0px;
+	padding-bottom:0px;
+  }
+
+  100% {
+	opacity: 1;
+	line-height:1.42857143;
+    height:16px;
+	padding-top:15px;
+	padding-bottom:15px;
+  }
 }

@@ -7,10 +7,10 @@
         $scope.itemData = [];
         $scope.maps = [];
         $scope.version = "5.16.1";
-        
-        var starting_item_threshold = 60000;    // 1 minute for starting items
-        var early_game_threshold = 720000;  // 1 minute to 12 minutes.
-        var mid_game_threshold = 1560000;   // 12 minutes to 26 minutes for mid game
+
+        var starting_item_threshold = 60000; // 1 minute for starting items
+        var early_game_threshold = 720000;   // 1 minute to 12 minutes.
+        var mid_game_threshold = 1560000;    // 12 minutes to 26 minutes for mid game
 
         var onComplete = function (response) {
             $scope.heroes = championService.heroSort(response.data);

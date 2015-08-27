@@ -250,31 +250,43 @@
             }
         });
         set_json += "]}}";
+
+        // Validate JSON data before submit
         validate_json = JSON.parse(set_json);
         var validated = true;
-        var validation_message = "";
-        if (validate_json.page.map == undefined)
+        console.log(validate_json);
+        if (validate_json.page.map == "undefined")
         {
             validated = false;
-            $("#noMap").show();
+            $("#noMap").animate({
+                'line-height': 1.42,
+                'opacity': 1,
+                'height': 42,
+                'padding': 12,
+                'margin-top': 10,
+            });
         }
+        else if ($("#noMap").hasClass("show-alert"))
+        {
+            $("#noMap").removeClass("show-alert");
+            $("#noMap").addClass("hide-alert");
+            $("#noMap").addClass("alert-hidden");
+        }
+
         if (validate_json.page.blocks.length == 0) 
         {
             validated = false;
             $("#noBlocks").show();
         }
-        else
-        {
-            for (var blockIndex in validate_json.page.blocks)
-            {
-                if (validate_json.page.blocks[blockIndex].items.length == 0)
-                {
-                    validated = false;
-                    $("#noItems").show();
-                    break;
-                }
+
+        for (var blockIndex in validate_json.page.blocks) {
+            if (validate_json.page.blocks[blockIndex].items.length == 0) {
+                validated = false;
+                $("#noItems").show();
+                break;
             }
         }
+
         if (validated)
         {
             Meteor.call('ExportSetFile', set_json, function (error, response) {
@@ -283,10 +295,6 @@
                     saveAs(blob, $(".set-title").text() + '.zip');
                 }
             });
-        }
-        else {
-            var html = '<div class="alert alert-danger"><span class="glyphicon glyphicon-exclamation-sign">  </span>' + validation_message + '</div>'
-            $("#download").after(html);
         }
         
     });
