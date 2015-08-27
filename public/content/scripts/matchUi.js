@@ -14,4 +14,18 @@ $(function () {
         })
     });
 
+    
+    //if($('#itemDetails').text() == 0) {
+    //    $('#itemDetails').removeClass("mouseOver");
+    //} else {
+    //    $('#itemDetails').addClass("mouseOver");
+    //}
+
+
+    
+        
+    
+
+
 });
+

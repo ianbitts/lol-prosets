@@ -1,5 +1,5 @@
 (function(){
-	var matchHistoryController = function($scope, $meteor, $location, championService, matchService){
+	var matchHistoryController = function($scope, $meteor, $http, $location, championService, matchService){
 
 	    $scope.summonerResult = false;
 	    $scope.validation = "";
@@ -34,7 +34,7 @@
 		}
 
         $scope.matchDetails = function(heroId){
-			
+            
 			function isEmpty(myObject) {
 				for(var key in myObject) {
 					if (myObject.hasOwnProperty(key)) {
@@ -47,8 +47,9 @@
 			if($scope.userName != undefined){
 				
 			    $scope.recentMatches = "";
-				matchService.getHeroMatchDetails($scope.userId, heroId).then(function(data){
-				    debugger;
+			   
+			    matchService.getHeroMatchDetails($scope.userId, heroId, $scope.selected_region.region).then(function (data) {
+				
 					if(isEmpty(data.matches)){
 					    $scope.heroMatchResults = ": No matches found";
 					    
@@ -88,8 +89,10 @@
 			for(i=0; i < 7; i++){
 				if(items["item"+i] != 0){
 					itemList.push(items["item"+i]);
-				} else{
-					
+				} else {
+				    
+				    itemList.push(0);
+
 				}
 			}
 
@@ -98,21 +101,21 @@
 	
 	
 		$scope.searchUser = function (userName, region) {
-		    console.log(region);
 		    
+		    $scope.recentMatches = undefined;
 			function hasWhiteSpace(s) {
 				return /\s/g.test(s);
 			}
-			
+			debugger;
 			if($scope.userName){
 
-			    matchService.getUserId(userName.replace(/\s/g, '')).then(function (data) {
+			    matchService.getUserId(userName.replace(/\s/g, ''), region.region).then(function (data) {
 			    		if(data != undefined){
 			    			$scope.userName = userName;
 			    			$scope.summonerResult = true;
 			    			$scope.userId = data[$scope.userName.replace(/\s/g, '').toLowerCase()].id;
-			    			$scope.userNameDisplay = data[$scope.userName.replace(/\s/g, '').toLowerCase()].name; 
-			    			
+			    			$scope.userNameDisplay = "";
+			    			debugger;
 			    			console.log(data);
 
 			    			matchService.getRecentMatchDetails($scope.userId, region.region).then(function (matchData) {
@@ -120,7 +123,7 @@
 			    				if (matchData != null)
 			    				{
 			    				    $scope.recentDisplayName = "Recent matches:";
-			    				    
+			    				    $scope.userNameDisplay = data[$scope.userName.replace(/\s/g, '').toLowerCase()].name;
 			    				    $scope.validation = "";
 			    				    $scope.recentMatches = matchService.recentMatchSort(matchData.matches);
 			    				}
@@ -130,12 +133,13 @@
 			    				}
 								
 			    			});
-			    		} else{
+			    		} else {
+
 			    			$scope.recentDisplayName = "";
 			    			$scope.validation = "Invalid username";							
 			    			$scope.userId = undefined;							
 			    		}						
-			    	});
+			    }, function () { $scope.validation = "Invalid username"; });
 			}else{
 			    $scope.recentDisplayName = "";
 			    $scope.validation = "Invalid username";
@@ -147,14 +151,24 @@
 
 
 		$scope.getHeroItemSet = function (matchId){
-
-		    console.log(matchId);
-		    console.log($scope.userId);
+		   
 		    var url = "/sets/summoner=" + $scope.userId + "/match=" + matchId;
 		    $location.path(url);
 		}
+
+
+		$scope.getItemDetails = function (items) {
+
+		    console.log(items);
+		    //matchService.getItemData(items).then(function () {
+               
+
+		    //});
+
+
+		};
 	};	
 	
-	angular.module("app").controller("matchHistoryController", ["$scope", "$meteor", "$location", "championService", "matchService", matchHistoryController]);
+	angular.module("app").controller("matchHistoryController", ["$scope", "$meteor", "$location", "$http", "championService", "matchService", matchHistoryController]);
 
 }());

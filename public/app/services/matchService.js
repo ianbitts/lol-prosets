@@ -5,29 +5,30 @@
 		var getRecentMatchDetails = function(userId, region){
 		    return $meteor.call("GetRecentMatchDetails", userId, region).then(
                 function (response) {
-                    console.log(response.data);
+                    
 				    return response.data;
                 },
                 function () { return undefined; });
 		}
 		
-		var getHeroMatchDetails = function( userId, heroId){
+		var getHeroMatchDetails = function( userId, heroId, region){
 
-		    return $meteor.call("GetHeroMatchDetails", userId, heroId).then(
+		    return $meteor.call("GetHeroMatchDetails", userId, heroId, region).then(
                 function (response) {
-                    console.log(response.data);
+                    
 				    return response.data;
 			    });
 		}
 
-		var getUserId = function (userName) { 
-            
-		    return $meteor.call("GetUserId", userName.toLowerCase()).then(function (response) {
-				return response.data;
-			},
-            function () {
-                return undefined;
-            });
+		var getUserId = function (userName, region) { 
+		    
+		    return $meteor.call("GetUserId", userName.toLowerCase(), region).then(function (response) {
+		        return response.data;
+		    });
+			//},
+            //function () {
+            //    return undefined;
+            //});
 		}
 		
 		var capitalize = function(s){
@@ -56,13 +57,25 @@
             }
 			return data;			
 		}
+
+		var getItemData = function (items) {
+
+		    
+
+		    return $meteor.call("GetItemData", items).then(
+               function (response) {
+                   console.log(response.data);
+                   return response.data;
+               });
+		}
 		
 
         return {
 			getRecentMatchDetails:getRecentMatchDetails,
 			getUserId:getUserId,
 			recentMatchSort:recentMatchSort,
-			getHeroMatchDetails:getHeroMatchDetails
+			getHeroMatchDetails: getHeroMatchDetails,
+			getItemData: getItemData
         };
 
 
