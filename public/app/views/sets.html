@@ -8,17 +8,17 @@
             </div>
             <div class="panel-body map-panel">
                 <div class="panel-body">
-                    <div data-map="SR" class="map btn btn-warning" data-baditems="{{maps[11].unpurchasableItemList}}">
+                    <div id="mapSR" data-map="SR" class="map btn btn-warning" data-baditems="{{maps[11].unpurchasableItemList}}">
                         <img class="map-icon" src="http://ddragon.leagueoflegends.com/cdn/5.2.1/img/map/{{maps[11].image.full}}" />
                         Summoner's Rift
                     </div>
 
-                    <div data-map="TT" class="map btn btn-warning" data-baditems="{{maps[10].unpurchasableItemList}}">
+                    <div id="mapTT" data-map="TT" class="map btn btn-warning" data-baditems="{{maps[10].unpurchasableItemList}}">
                         <img class="map-icon" src="http://ddragon.leagueoflegends.com/cdn/5.2.1/img/map/{{maps[10].image.full}}" />
                         Twisted Treeline
                     </div>
 
-                    <div data-map="HA" class="map btn btn-warning" data-baditems="{{maps[12].unpurchasableItemList}}">
+                    <div id="mapHA" data-map="HA" class="map btn btn-warning" data-baditems="{{maps[12].unpurchasableItemList}}">
                         <img class="map-icon" src="http://ddragon.leagueoflegends.com/cdn/5.2.1/img/map/{{maps[12].image.full}}" />
                         Howling Abyss
                     </div>
@@ -37,7 +37,7 @@
                 <div class="panel-body">
                     <input id="searchChampions" class="search form-control" type="text" placeholder="Search Champions" />
                     <div class="top-panel">
-                        <div id="{{hero.name}}" data-key="{{hero.key}}" class="champion-icon" data-ng-repeat="hero in heroes" data-name="{{hero.name}}">
+                        <div id="hero{{hero.id}}" data-key="{{hero.key}}" class="champion-icon" data-ng-repeat="hero in heroes" data-name="{{hero.name}}">
                             <img class="hero-img-format" data-err-img
                                  ng-src="http://ddragon.leagueoflegends.com/cdn/{{version}}/img/champion/{{hero.key + '.png'}}" alt="Hero Image" />
                             <span class="mouseOver">{{hero.name}}</span>
@@ -113,13 +113,13 @@
     <div class="col-sm-6">
         <div class="panel panel-warning">
             <div class="panel-heading">
-                <h3 class="panel-title set-title">Item Set - Click to change title</h3>
+                <h3 class="panel-title set-title">{{setTitle}}</h3>
             </div>
             <div class="panel-body block-panel">
 
-                <div ng-repeat="block in blocks" class="panel panel-warning item-group">
+                <div ng-repeat="block in blocks track by $index" class="panel panel-warning item-group">
                     <div class="panel-heading">
-                        <h4 class="panel-title group-title">Game Time: {{block[0].timestamp/1000/60 | number: 0 }}:{{(block[0].timestamp/1000%60 < 10)?0:""}}{{block[0].timestamp/1000%60 | number: 0}} <span class="remove-group pull-right">X</span></h4>
+                        <h4 class="panel-title group-title">{{blockTitles[$index]}}<span class="remove-group pull-right">X</span></h4>
                     </div>
                     <div class="droppable panel-body">
                         <div id="{{itemData[item.itemId].id}}"
@@ -139,6 +139,16 @@
 
                 <button id="addGroup" class="btn btn-success">Add Group</button>
                 <button id="download" class="btn btn-success">Download Item Set</button>
+                <br /><br />
+                <div id="noMap" class="alert alert-danger">
+                    <span class="glyphicon glyphicon-exclamation-sign">  </span> Please choose a map for this item set
+                </div>
+                <div id="noBlocks" class="alert alert-danger">
+                    <span class="glyphicon glyphicon-exclamation-sign">  </span> Item sets must have at least one block
+                </div>
+                <div id="noItems" class="alert alert-danger">
+                    <span class="glyphicon glyphicon-exclamation-sign">  </span> Each block must contain at least one item
+                </div>
 
             </div>
 

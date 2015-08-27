@@ -3,6 +3,7 @@
     padding-bottom: 20px;
     background-image: url(/content/images/summoners-rift.jpg);
     background-attachment:fixed;
+    background-repeat: no-repeat;
 }
 .navbar{
     margin-top: 10px;
@@ -110,6 +111,12 @@ div.item img{
     height: 40px;
     margin: 2px;
 }
+
+.modal-content{
+    background-image: url(/content/images/yellow-paper.jpg);
+    background-size: cover;
+}
+
 .modal-body{
     margin:0;
     padding:0;  
@@ -260,6 +267,9 @@ ul li{
     max-width: 400px;
     border: solid 2px brown;
     background-image: url(/content/images/brown-paper.jpg);
+    position: absolute;
+    left: -9999px;
+    top: -9999px;
 }
 
 #itemDetails div{
