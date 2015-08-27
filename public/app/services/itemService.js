@@ -1,4 +1,6 @@
-(function(){
+// Service for retrieving items from server-side API call.
+
+(function () {
     
     var itemService = function ($meteor) {
         
@@ -7,7 +9,6 @@
         var getItemData = function () {
 
             if (items.length == 0) {
-                console.log("did api request");
                 return $meteor.call("GetItemList").then(function (response) {
                     items = response.data.data;
                     return items;

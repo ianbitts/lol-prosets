@@ -218,8 +218,7 @@ div.itemContainer{
     animation-delay:.015s;
 }
 .hero-format.ng-enter { 
-    animation:fadeIn 0.5s both ease-in;
-    
+    animation:fadeIn 0.5s both ease-in; 
 }
 .modal-body span{
     color:white;
@@ -286,7 +285,7 @@ ul li{
 }
 
 .champion-panel{
-    height: 185px;
+    height: 188px;
     overflow-y: scroll;
 }
 .region-size{
@@ -318,27 +317,14 @@ ul li{
     height:0;
 }
 
-.hide-alert{
-    animation: .25s alertFadeIn ease reverse;
+#summonerSearch.alert{
+    padding: 10px;
+    transition:all linear 0.25s;
+    -webkit-transition:all linear 0.25s;
 }
-.show-alert{
-    animation: .25s alertFadeIn ease;
-}
-
-@keyframes alertFadeIn {
-  0% {
+#summonerSearch.alert.ng-hide{
     opacity: 0;
-	line-height:0px;
-    height:0px;
-	padding-top:0px;
-	padding-bottom:0px;
-  }
-
-  100% {
-	opacity: 1;
-	line-height:1.42857143;
-    height:16px;
-	padding-top:15px;
-	padding-bottom:15px;
-  }
+    padding: 0;
+    margin: 0;
 }
+

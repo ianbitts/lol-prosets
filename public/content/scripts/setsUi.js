@@ -2,6 +2,7 @@
 
     var draggable_enabled = false;
     
+    // Activate event listeners for dynamic DOM elements after giving them a chance to load.
     $(document).ready(function () {
         waitingDialog.show('Loading Item and Match data...');
         setTimeout(function () {
@@ -18,15 +19,25 @@
                 drop: function (event, ui) {
                     $(this).find(".placeholder").remove();
                     $(ui.draggable).clone().appendTo(this);
+
+                    $("#noItems").animate({
+                        'line-height': 0,
+                        'opacity': 0,
+                        'height': 0,
+                        'padding': 0,
+                        'margin-top': 0,
+                    });
                 }
             });
         }, 4000);
     });
 
+    // Remove an item block.
     $("body").on('click', '.remove-group', function (event) {
         $(event.target).parent().parent().parent("div.panel").remove();
     });
 
+    // Mouse-over item details
     $("body").hoverIntent(
         function (event) { // Mouse Enter
             var detailsPanel = $("#itemDetails");
@@ -56,7 +67,7 @@
         "div.item img"
     );
 
-
+    // Item search box.
     $("#searchItems").on('input', function () {
         var search = $("#searchItems").val().toLowerCase();
         var items = $("div.item-panel .item");
@@ -73,6 +84,7 @@
         })
     });
 
+    // Champion search box.
     $("#searchChampions").on('input', function () {
         var search = $("#searchChampions").val().toLowerCase();
         var champs = $("div.champion-icon");
@@ -87,9 +99,19 @@
         })
     });
 
+    // Map selection.
     $(".map").click(function (event) {
         if ($(event.target).hasClass("btn-warning"))
         {
+            // Remove the "No map selected" validation warning.
+            $("#noMap").animate({
+                'line-height': 0,
+                'opacity': 0,
+                'height': 0,
+                'padding': 0,
+                'margin-top': 0,
+            });
+
             $(".map.btn-success").addClass("btn-warning");
             $(".map.btn-success").removeClass("btn-success");
             $(event.target).removeClass("btn-warning");
@@ -105,9 +127,9 @@
             var baditems = $(event.target).data("baditems");
             for (var index in baditems) {
                 $("div.item-panel div#" + baditems[index]).addClass("hide-map");
-            }
-            
+            }       
         }
+
         else if ($(event.target).hasClass("btn-success"))
         {
             $(event.target).removeClass("btn-success");
@@ -120,6 +142,7 @@
         }
     });
 
+    // Item filter checkboxes.
     $(".filterChkbox").click(function (event) {
         var items = $("div.item-panel .item");
         items.removeClass("hide-filter");
@@ -143,6 +166,7 @@
         });
     });
 
+    // Cost filter checkboxes.
     $(".costChkbox").click(function (event) {
         var items = $("div.item-panel .item");
         items.removeClass("hide-cost");
@@ -158,7 +182,8 @@
         });
     });
     
-    $("body").on('click', 'div.champion-icon', function (event) {
+    // Champion selection.
+    $("body").on('click', 'div.champion-icon.selectable', function (event) {
         var champ = $(event.target);
         
         if (champ.is("img") || champ.is("span"))
@@ -174,27 +199,29 @@
             champ.addClass("champion-selected");
         }        
     })
-
-    $(".panel-body").on('click', 'div.item', function (event) {
-        if (draggable_enabled == false)
-        {
-            $("div.item").draggable({
-                helper: "clone",
-                appendTo: "body"
-            })
-            draggable_enabled = true;
-        }
-    })
     
+    // Click to remove items
     $(".panel-body").on('click', '.droppable div.item', function (event)
     {
         $(event.target).remove();
         $("#itemDetails").fadeOut();
     })
 
+    // Add an item block to the item set.
     $("#addGroup").click(function () {
-        var HTML = '<div class="panel panel-warning item-group"><div class="panel-heading"><h4 class="panel-title group-title">Click to change title<span class="remove-group pull-right">X</span></h4>';
-        HTML +=    '</div><div class="droppable panel-body"></div>';
+        // Remove "no blocks" validation warning.
+        $("#noBlocks").animate({
+            'line-height': 0,
+            'opacity': 0,
+            'height': 0,
+            'padding': 0,
+            'margin-top': 0,
+        });
+
+        var HTML = '<div class="panel panel-warning item-group>'
+        HTML += '<div class="panel-heading">'
+        HTML += '<h4 class="panel-title group-title">Click to change title<span class="remove-group pull-right">X</span></h4>';
+        HTML += '</div><div class="droppable panel-body"></div>';
         if ($(".item-group").length == 0)
         {
             $("#addGroup").before(HTML);
@@ -254,7 +281,8 @@
         // Validate JSON data before submit
         validate_json = JSON.parse(set_json);
         var validated = true;
-        console.log(validate_json);
+       
+        // Validation warning alert boxes
         if (validate_json.page.map == "undefined")
         {
             validated = false;
@@ -266,27 +294,34 @@
                 'margin-top': 10,
             });
         }
-        else if ($("#noMap").hasClass("show-alert"))
-        {
-            $("#noMap").removeClass("show-alert");
-            $("#noMap").addClass("hide-alert");
-            $("#noMap").addClass("alert-hidden");
-        }
 
         if (validate_json.page.blocks.length == 0) 
         {
             validated = false;
-            $("#noBlocks").show();
+            $("#noBlocks").animate({
+                'line-height': 1.42,
+                'opacity': 1,
+                'height': 42,
+                'padding': 12,
+                'margin-top': 10,
+            });
         }
 
         for (var blockIndex in validate_json.page.blocks) {
             if (validate_json.page.blocks[blockIndex].items.length == 0) {
                 validated = false;
-                $("#noItems").show();
+                $("#noItems").animate({
+                    'line-height': 1.42,
+                    'opacity': 1,
+                    'height': 42,
+                    'padding': 12,
+                    'margin-top': 10,
+                });
                 break;
             }
         }
 
+        // If everything is OK, go ahead and build the item set file directory on the server and save it to the local machine.
         if (validated)
         {
             Meteor.call('ExportSetFile', set_json, function (error, response) {
@@ -299,6 +334,7 @@
         
     });
     
+    // Re-title an item block.
     $("body").on('click', 'h4.group-title', function (event) {
         var value = $(event.target).text();
         var HTML = '<input type="text" class="form-control" id="newBlockTitle" placeholder="Enter block title"/>';
@@ -307,6 +343,7 @@
 
     })
 
+    // Save the title of an item block after editing.
     $("body").on('change', '#newBlockTitle', function (event) {
         var value = $("#newBlockTitle").val();
         var HTML = '<h4 class="panel-title group-title">' + value + '<span class="remove-group pull-right">X</span></h4>';
@@ -314,6 +351,7 @@
         $(event.target).replaceWith(HTML);
     });
 
+    // Re-title an item set.
     $("body").on('click', 'h3.set-title', function (event) {
         var value = $(event.target).text();
         var HTML = '<input type="text" class="form-control" id="newSetTitle" placeholder="Enter set title"/>';
@@ -322,6 +360,7 @@
 
     });
 
+    // Save the title of an item set after editing.
     $("body").on('change', '#newSetTitle', function (event) {
         var value = $("#newSetTitle").val();
         var HTML = '<h3 class="panel-title set-title">' + value + '</h3>';

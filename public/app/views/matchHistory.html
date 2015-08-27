@@ -13,11 +13,11 @@
                         <input type="text" ng-model="userName" class="form-control" placeholder="Summoner name" id="search" required />
                         <br />
                         <label>Region:</label>
-                        <select name="region" ng-init="selected_region = regions[5]" class="form-control region-size" ng-model="selected_region" ng-options="region.name for region in regions">
-                        </select>
+                        <select name="region" ng-init="selected_region = regions[5]" class="form-control region-size" ng-model="selected_region" ng-options="region.name for region in regions"></select>
                         <br />
-                        <p class="validation-message">{{validation}}</p>
-                        
+                        <p class="validation-message">
+                            <span id="summonerSearch" class="alert alert-danger" data-ng-show="validation"> <span class="glyphicon glyphicon-exclamation-sign"></span>  {{validation}}</span>
+                        </p>
                         <button class="btn btn-success pull-right">Search</button>
                     </form>
                 </div>
