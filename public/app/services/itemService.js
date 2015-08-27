@@ -1,9 +1,21 @@
-(function(){
+// Service for retrieving items from server-side API call.
+
+(function () {
     
-    var itemService = function ($http) {
+    var itemService = function ($meteor) {
         
-        var getItemData = function (items) {
-            
+        var items = [];
+
+        var getItemData = function () {
+
+            if (items.length == 0) {
+                return $meteor.call("GetItemList").then(function (response) {
+                    items = response.data.data;
+                    return items;
+                });
+            }
+
+            return items;
         };
         
         return {

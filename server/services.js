@@ -83,7 +83,7 @@ if (Meteor.isServer) {
                 }
             }
             else {
-                globalFolder.file(JSON.stringify(json.page.title) + '.json', JSON.stringify(json.page));
+                globalFolder.file(json.page.title + '.json', JSON.stringify(json.page));
             }
             
 

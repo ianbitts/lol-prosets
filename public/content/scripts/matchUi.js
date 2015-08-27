@@ -1,5 +1,5 @@
 $(function () {
-
+    // Search box for champions on the match history page.
     $("#searchChampions").on('input', function () {
         var search = $("#searchChampions").val().toLowerCase();
         var champs = $("div.champion-icon");
@@ -13,19 +13,5 @@ $(function () {
             }
         })
     });
-
-    
-    //if($('#itemDetails').text() == 0) {
-    //    $('#itemDetails').removeClass("mouseOver");
-    //} else {
-    //    $('#itemDetails').addClass("mouseOver");
-    //}
-
-
-    
-        
-    
-
-
 });
 

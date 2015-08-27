@@ -218,8 +218,7 @@ div.itemContainer{
     animation-delay:.015s;
 }
 .hero-format.ng-enter { 
-    animation:fadeIn 0.5s both ease-in;
-    
+    animation:fadeIn 0.5s both ease-in; 
 }
 .modal-body span{
     color:white;
@@ -286,7 +285,7 @@ ul li{
 }
 
 .champion-panel{
-    height: 185px;
+    height: 188px;
     overflow-y: scroll;
 }
 .region-size{
@@ -301,9 +300,7 @@ ul li{
 .smTab{	padding-left:1em;}
 
 .absolute-position{
-	
     position:absolute;
-
 }
 .validation-message{
     color: red;
@@ -312,5 +309,22 @@ ul li{
 }
 .center-text-align{
     text-align:center; 
-    
 }
+.alert-hidden{
+    opacity: 0;
+	padding:0;
+    margin:0;
+    height:0;
+}
+
+#summonerSearch.alert{
+    padding: 10px;
+    transition:all linear 0.25s;
+    -webkit-transition:all linear 0.25s;
+}
+#summonerSearch.alert.ng-hide{
+    opacity: 0;
+    padding: 0;
+    margin: 0;
+}
+

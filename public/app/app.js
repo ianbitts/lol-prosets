@@ -7,14 +7,7 @@
         $routeProvider
         .when("/", {
             templateUrl: "app/views/home.html"
-            //,controller: "matchHistoryController"
-
         })
-        //.when("/champions", {
-        //    templateUrl: "app/views/champions.html",
-        //    controller: "championsController"
-
-        //})
         .when("/sets/summoner=:userId/match=:matchId", {
             templateUrl: "app/views/sets.html",
             controller: "setsController",
@@ -26,15 +19,13 @@
         .when("/matchHistory", {
             templateUrl: "app/views/matchHistory.html",
             controller: "matchHistoryController"
-
         })		
         .otherwise({ redirectTo: "/" });
-
 
         $locationProvider.html5Mode(true);
     });
 
-
+    // Handles images that cannot be loaded by Data Dragon
     app.directive('errImg', function () {
         return {
             link: function (scope, element, attrs) {
@@ -46,7 +37,6 @@
                 });
             }
         }
-
     });
 
 }());

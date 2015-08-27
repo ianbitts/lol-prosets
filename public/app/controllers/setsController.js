@@ -1,21 +1,22 @@
 (function(){
     
     var setsController = function ($scope, $meteor, $routeParams, championService, itemService) {
-
+        
         $scope.heroes = [];
         $scope.items = [];
         $scope.itemData = [];
         $scope.maps = [];
         $scope.version = "5.16.1";
-        
-        var starting_item_threshold = 60000;    // 1 minute for starting items
-        var early_game_threshold = 720000;  // 1 minute to 12 minutes.
-        var mid_game_threshold = 1560000;   // 12 minutes to 26 minutes for mid game
+
+        var starting_item_threshold = 60000; // 1 minute for starting items
+        var early_game_threshold = 720000;   // 1 minute to 12 minutes.
+        var mid_game_threshold = 1560000;    // 12 minutes to 26 minutes for mid game
 
         var onComplete = function (response) {
             $scope.heroes = championService.heroSort(response.data);
         };
         
+        // Filter out unshoppable items from the side item panel.
         var filterItem = function (item) {
             // Filter by tags
             if (item.tags != null) {
@@ -23,7 +24,7 @@
             }
             $scope.itemData[item.id] = item;
         }
-
+        // Executes after the item list is retrieved from a server-side API request
         var itemsComplete = function (response) {
             var itemList = response.data.data;
             for (var index in itemList)
@@ -31,11 +32,11 @@
                 filterItem(itemList[index]);
             }
         }
-
+        // Executes after map data is retrieved from a server-side API request.
         var mapsComplete = function (response) {
             $scope.maps = response.data;
         }
-
+        // Finds the participant info for the summoner that was searched on the match history page.
         var findParticipant = function (participantInfo, summonerId) {
             for (var index in participantInfo)
             {
@@ -45,10 +46,9 @@
                 }
             }
         }
-
+        // Loads the match selected from the match history page.
         var loadMatch = function (response) {
             var match = response.data;
-            console.log(match);
             var participant = findParticipant(match.participantIdentities, $routeParams.userId);
             var championId = match.participants[participant.index].championId;
             
@@ -143,6 +143,7 @@
             blocks.push(mid_block);
             blocks.push(late_block);
 
+            // Filter out sells/destroys from the item set blocks.
             for (var i in buys)
             {
                 for (var eventIndex in buys[i])
@@ -189,6 +190,7 @@
             $scope.setTitle = championName + " by " + participant.name;
         }
 
+        // If no match data is provided, start with an empty item set.
         var loadDefaults = function ()
         {
             $scope.blocks = [null];
@@ -196,6 +198,7 @@
             $scope.setTitle = "New Item Set - Click to change title";
         }
 
+        // Execution of the controller begins here, making asynchronous calls to the server.
         $meteor.call("GetMapData").then(mapsComplete);
         $meteor.call("GetItemList").then(itemsComplete).then(function () {
             if ($routeParams.userId != null && $routeParams.matchId != null) {
