@@ -34,9 +34,10 @@
                 <div class="panel-body">
                     <input id="searchChampions" class="search form-control" type="text" placeholder="Filter Champions" />
                     <div class="hero-format2 champion-panel">
-                        <div class="champion-icon" data-name="{{hero.name}}" ng-repeat="hero in heroes" ng-click="matchDetails(hero.id)">
-                            <!--<div class="champion-icon" id="modalButton" data-name="{{hero.name}}" data-toggle="modal" data-target="#myModal" ng-repeat="hero in heroes" ng-click="matchDetails(hero.id)">-->
-                            <img class="hero-img-format" ng-src="http://ddragon.leagueoflegends.com/cdn/5.16.1/img/champion/{{hero.key}}.png" alt="Hero Image" />
+                        <div class="champion-icon" data-name="{{hero.name}}" ng-repeat="hero in heroes" ng-click="matchDetails(hero.id)">                           
+                            <img class="hero-img-format" ng-src="http://ddragon.leagueoflegends.com/cdn/5.16.1/img/champion/{{hero.key}}.png" alt="Hero Image" 
+                                 
+                                 />
                             <span class="mouseOver">{{hero.name}}</span>
                         </div>
                     </div>
@@ -61,7 +62,7 @@
                             <tr class="row">
                                 <td class="col-xs-2" ng-repeat="image in getChampionImage(match.participants[0].championId)">
                                     <img class="hero-img-format" src="http://ddragon.leagueoflegends.com/cdn/5.16.1/img/champion/{{image.key}}.png">
-                                    <span class="smTab absolute-position"><label>{{image.name}}</label></span>
+                                    <span class="smTab"><label>{{image.name}}</label></span>
                                 </td>
 
                                 <td class="col-xs-1">
@@ -88,10 +89,19 @@
                                     
                                 </td>
 
-                                <td class="col-xs-4">
-                                    <img class="item-img-format" ng-repeat="items in getItemListPerMatch(match.participants[0].stats) track by $index" data-preload-image
-                                         data-fallback-image="http://ddragon.leagueoflegends.com/cdn/4.2.6/img/item/{{items}}.png"
-                                         ng-src="http://ddragon.leagueoflegends.com/cdn/5.16.1/img/item/{{items}}.png" alt="item image" />
+                                <td class="col-xs-4" >
+                                    <div class="itemContainer" id="detectZeroImage" ng-repeat="items in getItemListPerMatch(match.participants[0].stats) track by $index"
+                                         ng-mouseover="getItemDetails(match.participants[0].stats['item' + $index])">
+                                        <img class="item-img-format" data-preload-image
+                                             onerror="if (this.src != 'content/images/noItem.png') this.src = 'content/images/noItem.png';"
+                                             data-fallback-image="http://ddragon.leagueoflegends.com/cdn/4.2.6/img/item/{{items}}.png"
+                                             ng-src="http://ddragon.leagueoflegends.com/cdn/5.16.1/img/item/{{items}}.png" alt="item image" />
+
+                                        <span class="mouseOver">
+
+                                        </span>
+
+                                    </div>
                                 </td>
                                 <td class="col-xs-2"><button class="btn btn-primary" ng-click="getHeroItemSet(match.matchId)">Get Item Set</button></td>
 
@@ -102,6 +112,9 @@
             </div>
         </div>
     </div>   
+
+  
 </div>
+
 
 <script src="/content/scripts/matchUi.js"></script>

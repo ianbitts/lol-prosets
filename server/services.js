@@ -18,20 +18,23 @@ if (Meteor.isServer) {
 
         GetRecentMatchDetails: function (userId, region) {
             this.unblock();
-            var url = "https://" + region + ".api.pvp.net/api/lol/na/v2.2/matchhistory/" + userId + "?beginIndex=0&endIndex=15&api_key=fc9cb83e-8c1d-488a-b71c-52c65f9ae015";
+            
+            var url = "https://" + region + ".api.pvp.net/api/lol/" + region + "/v2.2/matchhistory/" + userId + "?beginIndex=0&endIndex=15&api_key=fc9cb83e-8c1d-488a-b71c-52c65f9ae015";
+            console.log(url);
             return HTTP.call("GET", url);
         },
 
-        GetHeroMatchDetails: function (userId, heroId){
+        GetHeroMatchDetails: function (userId, heroId, region){
             this.unblock();
-            var url = "https://na.api.pvp.net/api/lol/na/v2.2/matchhistory/" + userId 
+            var url = "https://" + region + ".api.pvp.net/api/lol/" + region +"/v2.2/matchhistory/" + userId 
 				+ "?championIds=" + heroId + "&beginIndex=0&endIndex=15&api_key=fc9cb83e-8c1d-488a-b71c-52c65f9ae015";
             return HTTP.call("GET", url);
         },
 
-        GetUserId: function (userName){
+        GetUserId: function (userName, region){
             this.unblock();
-            var url = "https://na.api.pvp.net/api/lol/na/v1.4/summoner/by-name/" + userName + "?api_key=fc9cb83e-8c1d-488a-b71c-52c65f9ae015";
+            
+            var url = "https://" + region + ".api.pvp.net/api/lol/" + region + "/v1.4/summoner/by-name/" + userName + "?api_key=fc9cb83e-8c1d-488a-b71c-52c65f9ae015";
             return HTTP.call("GET", url);
         },
 
@@ -56,6 +59,13 @@ if (Meteor.isServer) {
         GetMapData: function (index) {
             var url = "https://global.api.pvp.net/api/lol/static-data/na/v1.2/map?version=5.14.1&api_key=fc9cb83e-8c1d-488a-b71c-52c65f9ae015"
             return HTTP.call("GET", url).data;
+        },
+        GetItemData: function (items) {
+            this.unblock();
+            var url = "https://global.api.pvp.net/api/lol/static-data/na/v1.2/item/" + items + "?api_key=fc9cb83e-8c1d-488a-b71c-52c65f9ae015";
+
+            return HTTP.call("GET", url).data;
+
         },
 
         ExportSetFile: function (json) {

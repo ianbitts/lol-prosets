@@ -2,14 +2,19 @@
 
     var app = angular.module("app", ["angular-meteor", "ngRoute", "ngAnimate", "angular-preload-image"]);
 
-    app.config(function ($routeProvider) {
+    app.config(function ($routeProvider, $locationProvider) {
 
         $routeProvider
-        .when("/champions", {
-            templateUrl: "app/views/champions.html",
-            controller: "championsController"
+        .when("/", {
+            templateUrl: "app/views/home.html"
+            //,controller: "matchHistoryController"
 
         })
+        //.when("/champions", {
+        //    templateUrl: "app/views/champions.html",
+        //    controller: "championsController"
+
+        //})
         .when("/sets/summoner=:userId/match=:matchId", {
             templateUrl: "app/views/sets.html",
             controller: "setsController",
@@ -22,13 +27,11 @@
             templateUrl: "app/views/matchHistory.html",
             controller: "matchHistoryController"
 
-        })
-		.when("/about", {
-		    templateUrl: "app/views/about.html"
-		    //,controller: "matchHistoryController"
-
-		})
+        })		
         .otherwise({ redirectTo: "/" });
+
+
+        $locationProvider.html5Mode(true);
     });
 
 

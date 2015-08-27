@@ -148,6 +148,18 @@ div.champion-icon:hover span.mouseOver{
     z-index: 999;
     
 }
+div.itemContainer:hover span.mouseOver{
+    display: block;
+    position: absolute;
+    left: 5px;
+    top: 30px;
+    background-image: url("/content/images/yellow-paper.jpg");
+    padding: 4px;
+    border: solid 1px black;
+    z-index: 999;
+    
+}
+
 
 div.map:hover span.mouseOver{
     display: block;
@@ -166,6 +178,16 @@ div.champion-icon{
     position: relative;
     height: 50px;
     width: 50px;
+    cursor: pointer;
+}
+div.itemContainer{
+    float:left;
+    margin:0;
+    padding:0; 
+    position: relative;
+    height: 40px;
+    width: 40px;
+    
     cursor: pointer;
 }
 .droppable{
@@ -272,8 +294,9 @@ ul li{
 }
 .item-img-format{
     width:40px;
-    height:40px;
-    float:left;   
+    height:40px;  
+    padding-left:1px;   
+    
 }
 .smTab{	padding-left:1em;}
 
