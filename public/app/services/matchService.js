@@ -4,6 +4,8 @@
 
     var matchService = function ($meteor) {
 
+        
+
         // Get the recent matches of a player given their userID and region.
 		var getRecentMatchDetails = function(userId, region){
 		    return $meteor.call("GetRecentMatchDetails", userId, region).then(
@@ -70,6 +72,7 @@
 			recentMatchSort:recentMatchSort,
 			getHeroMatchDetails: getHeroMatchDetails,
 			getItemData: getItemData
+			
         };
 
 

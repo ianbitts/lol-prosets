@@ -100,10 +100,6 @@
 			for (i = 0; i < 7; i++) {
 				if(items["item"+i] != 0){
 					itemList.push(items["item"+i]);
-				} else {
-				    
-				    itemList.push(0);
-
 				}
 			}
 
@@ -116,8 +112,9 @@
 		    $scope.recentMatches = undefined;
 
 			if($scope.userName){
-
-			    matchService.getUserId(userName.replace(/\s/g, ''), region.region).then(function (data) {
+			    
+			    matchService.getUserId(userName, region.region).then(function (data) {
+			        
 			    		if(data != undefined){
 			    			$scope.userName = userName;
 			    			$scope.summonerResult = true;
@@ -144,7 +141,7 @@
 			    			$scope.validation = "Invalid username";							
 			    			$scope.userId = undefined;							
 			    		}						
-			    }, function () { $scope.validation = "Invalid username"; });
+			    }, function () { $scope.validation = "An unexpected error has occurred. Please try again."; });
 			} else {
 			    $scope.recentDisplayName = "";
 			    $scope.validation = "Invalid username";
