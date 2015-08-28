@@ -1,12 +1,13 @@
 if (Meteor.isServer) {
     
     var version = "5.16.1"
+    var api_key = // KEY GOES HERE
 
     Meteor.methods({
 
         GetItemList: function () {
             this.unblock();
-            var url = "https://global.api.pvp.net/api/lol/static-data/na/v1.2/item?version=5.16.1&itemListData=all&api_key=fc9cb83e-8c1d-488a-b71c-52c65f9ae015";
+            var url = "https://global.api.pvp.net/api/lol/static-data/na/v1.2/item?version=5.16.1&itemListData=all&api_key=" + api_key;
             return HTTP.call("GET", url);
         },
 
@@ -16,14 +17,14 @@ if (Meteor.isServer) {
             {
                 region = "na";
             }
-            var url = "https://" + region + ".api.pvp.net/api/lol/" + region + "/v2.2/match/" + matchId + "?includeTimeline=true&api_key=fc9cb83e-8c1d-488a-b71c-52c65f9ae015";
+            var url = "https://" + region + ".api.pvp.net/api/lol/" + region + "/v2.2/match/" + matchId + "?includeTimeline=true&api_key=" + api_key;
             return HTTP.call("GET", url);
         },
 
         GetRecentMatchDetails: function (userId, region) {
             this.unblock();
             
-            var url = "https://" + region + ".api.pvp.net/api/lol/" + region + "/v2.2/matchhistory/" + userId + "?beginIndex=0&endIndex=15&api_key=fc9cb83e-8c1d-488a-b71c-52c65f9ae015";
+            var url = "https://" + region + ".api.pvp.net/api/lol/" + region + "/v2.2/matchhistory/" + userId + "?beginIndex=0&endIndex=15&api_key=" + api_key;
             console.log(url);
             return HTTP.call("GET", url);
         },
@@ -31,14 +32,14 @@ if (Meteor.isServer) {
         GetHeroMatchDetails: function (userId, heroId, region){
             this.unblock();
             var url = "https://" + region + ".api.pvp.net/api/lol/" + region +"/v2.2/matchhistory/" + userId 
-				+ "?championIds=" + heroId + "&beginIndex=0&endIndex=15&api_key=fc9cb83e-8c1d-488a-b71c-52c65f9ae015";
+				+ "?championIds=" + heroId + "&beginIndex=0&endIndex=15&api_key=" + api_key;
             return HTTP.call("GET", url);
         },
 
         GetUserId: function (userName, region){
             this.unblock();
             
-            var url = "https://" + region + ".api.pvp.net/api/lol/" + region + "/v1.4/summoner/by-name/" + userName + "?api_key=fc9cb83e-8c1d-488a-b71c-52c65f9ae015";
+            var url = "https://" + region + ".api.pvp.net/api/lol/" + region + "/v1.4/summoner/by-name/" + userName + "?api_key=" + api_key;
             return HTTP.call("GET", url);
         },
 
@@ -56,7 +57,7 @@ if (Meteor.isServer) {
         },
 
         GetSingleHero: function (index) {
-            var url = "https://global.api.pvp.net/api/lol/static-data/na/v1.2/champion/" + index + "?champData=info,spells,tags&api_key=fc9cb83e-8c1d-488a-b71c-52c65f9ae015";
+            var url = "https://global.api.pvp.net/api/lol/static-data/na/v1.2/champion/" + index + "?champData=info,spells,tags&api_key=" + api_key;
             return HTTP.call("GET", url).data;
         },
 
@@ -66,13 +67,13 @@ if (Meteor.isServer) {
         },
         GetItemData: function (items) {
             this.unblock();
-            var url = "https://global.api.pvp.net/api/lol/static-data/na/v1.2/item/" + items + "?api_key=fc9cb83e-8c1d-488a-b71c-52c65f9ae015";
+            var url = "https://global.api.pvp.net/api/lol/static-data/na/v1.2/item/" + items + "?api_key=" + api_key;;
 
             return HTTP.call("GET", url).data;
         },
         GetChallengerLeague: function(region){
             this.unblock();
-            var url = "https://" + region + ".api.pvp.net/api/lol/" + region + "/v2.5/league/challenger?type=RANKED_SOLO_5x5&api_key=fc9cb83e-8c1d-488a-b71c-52c65f9ae015";
+            var url = "https://" + region + ".api.pvp.net/api/lol/" + region + "/v2.5/league/challenger?type=RANKED_SOLO_5x5&api_key=" + api_key;;
             return HTTP.call("GET", url).data;
         },
 
