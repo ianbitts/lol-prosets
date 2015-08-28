@@ -29,7 +29,7 @@
                     });
                 }
             });
-        }, 4000);
+        }, 4500);
     });
 
     // Remove an item block.
@@ -218,7 +218,7 @@
             'margin-top': 0,
         });
 
-        var HTML = '<div class="panel panel-warning item-group>'
+        var HTML = '<div class="panel panel-warning item-group">'
         HTML += '<div class="panel-heading">'
         HTML += '<h4 class="panel-title group-title">Click to change title<span class="remove-group pull-right">X</span></h4>';
         HTML += '</div><div class="droppable panel-body"></div>';

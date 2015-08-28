@@ -4,6 +4,7 @@
     background-image: url(/content/images/summoners-rift.jpg);
     background-attachment:fixed;
     background-repeat: no-repeat;
+    background-color: rgb(1, 20, 1);
 }
 .navbar{
     margin-top: 10px;
@@ -156,8 +157,7 @@ div.itemContainer:hover span.mouseOver{
     background-image: url("/content/images/yellow-paper.jpg");
     padding: 4px;
     border: solid 1px black;
-    z-index: 999;
-    
+    z-index: 999; 
 }
 
 

@@ -53,7 +53,7 @@
 				}
 				
             }
-			return data;			
+			return data.reverse();			
 		}
 
 		var getItemData = function (items) {
