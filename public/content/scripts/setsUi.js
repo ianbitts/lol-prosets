@@ -212,7 +212,12 @@
     // Click to remove items
     $(".panel-body").on('click', '.droppable div.item', function (event)
     {
-        $(event.target).remove();
+        var item = $(event.target)
+        if (item.is('img'))
+        {
+            var item = item.parent("div.item");
+        }
+        $(item).remove();
         $("#itemDetails").fadeOut();
     })
 
