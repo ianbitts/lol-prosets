@@ -25,6 +25,9 @@ jQuery
 Bootstrap3
 
 Plugins and Other Snippets
-angular-image-preloader by Ben Nadel: http://www.bennadel.com/blog/2597-preloading-images-in-angularjs-with-promises.htm
-waitingDialog loading modal by Eugene Maslovich: http://bootsnipp.com/snippets/featured/quotwaiting-forquot-modal-dialog
-hoverIntent by Brian Cherne: http://cherne.net/brian/resources/jquery.hoverIntent.html
+angular-image-preloader by Ben Nadel: 
+http://www.bennadel.com/blog/2597-preloading-images-in-angularjs-with-promises.htm
+waitingDialog loading modal by Eugene Maslovich:
+http://bootsnipp.com/snippets/featured/quotwaiting-forquot-modal-dialog
+hoverIntent by Brian Cherne: 
+http://cherne.net/brian/resources/jquery.hoverIntent.html
