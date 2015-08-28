@@ -35,7 +35,7 @@
 
 	    
 
-		$scope.matchDetails = function (heroId) {
+		$scope.matchDetails = function (heroId, index) {
             // Test whether or not a property of the match details object exists.
 		    function isEmpty(myObject) {
 		        for (var key in myObject) {
@@ -45,13 +45,13 @@
 		        }
 		        return true;
 		    }
-
+		    debugger;
 			if($scope.userName != undefined){			
 			    $scope.recentMatches = "";
 			    matchService.getHeroMatchDetails($scope.userId, heroId, $scope.selected_region.region).then(function (data) {
 			        if (isEmpty(data.matches)) {
                         //
-					    $scope.heroMatchResults = ": No matches found";    
+					    $scope.heroMatchResults = ": No matches found with " + championService.heroList[index].name;    
 						data = undefined;
 					}else{
 						$scope.heroMatchResults = "";
@@ -83,7 +83,8 @@
 			
 			var itemList = [];
 			
-			for(i=0; i < 7; i++){
+			for (i = 0; i < 7; i++) {
+			    debugger;
 				if(items["item"+i] != 0){
 					itemList.push(items["item"+i]);
 				} else {
@@ -143,7 +144,7 @@
 			
 		}
 
-
+		
 		$scope.getHeroItemSet = function (matchId){
 		   
 		    var url = "/sets/summoner=" + $scope.userId + "/match=" + matchId;
@@ -151,9 +152,7 @@
 		}
 
 
-		$scope.getItemDetails = function (items) {
-
-		};
+		
 	};	
 	
 	angular.module("app").controller("matchHistoryController", ["$scope", "$meteor", "$location", "championService", "matchService", matchHistoryController]);

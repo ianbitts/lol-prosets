@@ -34,10 +34,8 @@
                 <div class="panel-body">
                     <input id="searchChampions" class="search form-control" type="text" placeholder="Filter Champions" />
                     <div class="hero-format2 champion-panel">
-                        <div class="champion-icon" data-name="{{hero.name}}" ng-repeat="hero in heroes" ng-click="matchDetails(hero.id)">                           
-                            <img class="hero-img-format" ng-src="http://ddragon.leagueoflegends.com/cdn/5.16.1/img/champion/{{hero.key}}.png" alt="Hero Image" 
-                                 
-                                 />
+                        <div class="champion-icon fadeinAnimate" data-name="{{hero.name}}" ng-repeat="hero in heroes" ng-click="matchDetails(hero.id, $index)">
+                            <img class="hero-img-format" ng-src="http://ddragon.leagueoflegends.com/cdn/5.16.1/img/champion/{{hero.key}}.png" alt="Hero Image" />
                             <span class="mouseOver">{{hero.name}}</span>
                         </div>
                     </div>
@@ -53,13 +51,13 @@
                 <span class="panel-title">{{recentDisplayName}} {{userNameDisplay}}{{heroMatchResults}}</span>
             </div>
             <div class="panel-body">
-                <div class="panel panel-warning" ng-repeat="match in recentMatches">
+                <div class="panel panel-warning fadeinAnimate" ng-repeat="match in recentMatches">
                     <div class="panel-heading">
                         <h3 class="panel-title"> {{mapNames[match.mapId]}} -- {{match.matchCreation | date:'medium'}}</h3>
                     </div>
                     <div class="panel-body">
                         <table>
-                            <tr class="row">
+                            <tr class="row ">
                                 <td class="col-xs-2" ng-repeat="image in getChampionImage(match.participants[0].championId)">
                                     <img class="hero-img-format" src="http://ddragon.leagueoflegends.com/cdn/5.16.1/img/champion/{{image.key}}.png">
                                     <span class="smTab"><label>{{image.name}}</label></span>
@@ -75,7 +73,8 @@
                                     <div>
                                         <label>Gold</label>
                                     </div>
-                                    {{match.participants[0].stats.goldEarned}}</td>
+                                    {{match.participants[0].stats.goldEarned}}
+                                </td>
                                 <td class="col-xs-1">
                                     <div>
                                         <label>Duration</label>
@@ -83,23 +82,19 @@
                                     {{match.matchDuration/60 | number: 0 }}:{{(match.matchDuration%60 < 10)?0:""}}{{match.matchDuration%60 | number: 0}}
                                 </td>
 
-                                <td class="col-xs-1">                                    
+                                <td class="col-xs-1">
                                     <label>W/L</label><br />
                                     {{match.participants[0].stats.winner}}
-                                    
+
                                 </td>
 
-                                <td class="col-xs-4" >
-                                    <div class="itemContainer" id="detectZeroImage" ng-repeat="items in getItemListPerMatch(match.participants[0].stats) track by $index"
+                                <td class="col-xs-4">
+                                    <div class="itemContainer" id="detectZeroImage" ng-repeat="itemList in getItemListPerMatch(match.participants[0].stats) track by $index"
                                          ng-mouseover="getItemDetails(match.participants[0].stats['item' + $index])">
                                         <img class="item-img-format" data-preload-image
-                                             onerror="if (this.src != 'content/images/noItem.png') this.src = 'content/images/noItem.png';"
-                                             data-fallback-image="http://ddragon.leagueoflegends.com/cdn/4.2.6/img/item/{{items}}.png"
-                                             ng-src="http://ddragon.leagueoflegends.com/cdn/5.16.1/img/item/{{items}}.png" alt="item image" />
-
-                                        <span class="mouseOver">
-
-                                        </span>
+                                             onerror="if (this.src != 'content/images/yellow-paper.jpg') this.src = 'content/images/yellow-paper.jpg';"
+                                             data-fallback-image="http://ddragon.leagueoflegends.com/cdn/4.2.6/img/item/{{itemList}}.png"
+                                             ng-src="http://ddragon.leagueoflegends.com/cdn/5.16.1/img/item/{{itemList}}.png" alt="item image" />
 
                                     </div>
                                 </td>

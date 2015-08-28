@@ -328,3 +328,16 @@ ul li{
     margin: 0;
 }
 
+@keyframes fadeIn{
+    0% { opacity: 0;}
+    100% { opacity: 1;}
+
+}
+
+
+.fadeinAnimate.ng-enter-stagger{
+    animation-delay:.015s;
+}
+.fadeinAnimate.ng-enter{ 
+    animation:fadeIn 0.5s both ease-in;    
+}

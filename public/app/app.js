@@ -16,7 +16,7 @@
             templateUrl: "app/views/sets.html",
             controller: "setsController",
         })
-        .when("/matchHistory", {
+        .when("/matchHistory/", {
             templateUrl: "app/views/matchHistory.html",
             controller: "matchHistoryController"
         })		
@@ -38,5 +38,11 @@
             }
         }
     });
+
+    $scope.reloadMatchHistory = function () {
+
+        $route.reload();
+
+    }
 
 }());
