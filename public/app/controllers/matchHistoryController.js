@@ -21,11 +21,13 @@
 	    var onComplete = function (response) {
 	        $scope.heroes = championService.heroSort(response.data);
 	        championService.heroList = $scope.heroes;
+	        waitingDialog.hide();
 	    }
 
         // Gets hero list from the champion service.
 		if (championService.heroList.length == 0)
 		{
+		    waitingDialog.show('Loading champions...');
 			$meteor.call("GetHeroList").then(onComplete);
 		}
 		else
@@ -48,14 +50,15 @@
 
 			if($scope.userName != undefined){			
 			    $scope.recentMatches = "";
-			    matchService.getHeroMatchDetails($scope.userId, heroId, $scope.selected_region.region).then(function (data) {
+                waitingDialog.show('Loading match history...')
+                matchService.getHeroMatchDetails($scope.userId, heroId, $scope.selected_region.region).then(function (data) {
+                    waitingDialog.hide();
 			        if (isEmpty(data.matches)) {
-                        //
 					    $scope.heroMatchResults = ": No matches found";    
 						data = undefined;
 					}else{
 						$scope.heroMatchResults = "";
-						$scope.recentMatches = $filter('orderBy')(matchService.recentMatchSort(data.matches), "matchCreation", true);
+						$scope.recentMatches = matchService.recentMatchSort(data.matches);
 					}		
 				});
 				
@@ -112,8 +115,9 @@
 			    			$scope.summonerResult = true;
 			    			$scope.userId = data[$scope.userName.replace(/\s/g, '').toLowerCase()].id;
 			    			$scope.userNameDisplay = "";
-
-			    			matchService.getRecentMatchDetails($scope.userId, region.region).then(function (matchData) {
+                            waitingDialog.show('Getting match history...')
+                            matchService.getRecentMatchDetails($scope.userId, region.region).then(function (matchData) {
+                                waitingDialog.hide();
 			    				if (matchData != null)
 			    				{
 			    				    $scope.recentDisplayName = "Recent matches:";
@@ -143,16 +147,11 @@
 		}
 
 
-		$scope.getHeroItemSet = function (matchId){
-		   
+		$scope.getHeroItemSet = function (matchId){	   
 		    var url = "/sets/summoner=" + $scope.userId + "/match=" + matchId;
 		    $location.path(url);
 		}
 
-
-		$scope.getItemDetails = function (items) {
-
-		};
 	};	
 	
 	angular.module("app").controller("matchHistoryController", ["$scope", "$meteor", "$location", "championService", "matchService", matchHistoryController]);

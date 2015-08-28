@@ -328,3 +328,6 @@ ul li{
     margin: 0;
 }
 
+#itemDetailsDelete{
+    color: red;
+}

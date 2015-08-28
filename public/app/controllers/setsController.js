@@ -15,7 +15,7 @@
         var onComplete = function (response) {
             $scope.heroes = championService.heroSort(response.data);
         };
-        
+
         // Filter out unshoppable items from the side item panel.
         var filterItem = function (item) {
             // Filter by tags
@@ -171,23 +171,28 @@
             // Set Map
             if (match.mapId == 1 || match.mapId == 2 || match.mapId == 11)
             {
-                angular.element("div#mapSR").removeClass("btn-warning");
-                angular.element("div#mapSR").addClass("btn-success");
+                angular.element("div#mapSR").trigger('click');
             }
             else if (match.mapId == 4 || match.mapId == 10)
             {
-                angular.element("div#mapTT").removeClass("btn-warning");
-                angular.element("div#mapTT").addClass("btn-success");
+                angular.element("div#mapTT").trigger('click');
             }
             else if (match.mapId == 12 || match.mapId == 14) {
-                angular.element("div#mapHA").removeClass("btn-warning");
-                angular.element("div#mapHA").addClass("btn-success");
+                angular.element("div#mapHA").trigger('click');
             }
 
             // Set Champion and Set Title
             angular.element("#hero" + championId).addClass("champion-selected");
             var championName = angular.element("#hero" + championId).data('name');
             $scope.setTitle = championName + " by " + participant.name;
+            waitingDialog.hide();
+            angular.element("#loadComplete").trigger('click');
+
+            // Set up DOM elements
+            setTimeout(function () {
+                angular.element("#loadComplete").trigger("click");
+                waitingDialog.hide();
+            }, 1000)
         }
 
         // If no match data is provided, start with an empty item set.
@@ -198,7 +203,8 @@
             $scope.setTitle = "New Item Set - Click to change title";
         }
 
-        // Execution of the controller begins here, making asynchronous calls to the server.
+        // Execution of the controller begins here, making asynchronous calls to the server.     
+        waitingDialog.show('Loading Item and Match data...');
         $meteor.call("GetMapData").then(mapsComplete);
         $meteor.call("GetItemList").then(itemsComplete).then(function () {
             if ($routeParams.userId != null && $routeParams.matchId != null) {
@@ -206,6 +212,10 @@
             }
             else {
                 loadDefaults();
+                setTimeout(function () {
+                    angular.element("#loadComplete").trigger("click");
+                    waitingDialog.hide();
+                }, 1000)      
             }
         });
         $meteor.call("GetHeroList").then(onComplete);

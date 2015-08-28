@@ -98,7 +98,7 @@
                              data-gold="{{item.gold.total}}" 
                              data-sell="{{item.gold.sell}}" 
                              data-desc="{{item.sanitizedDescription}}" 
-                             class="item" 
+                             class="item item-draggable" 
                              ng-repeat="item in items track by $index">
                             <img src="http://ddragon.leagueoflegends.com/cdn/{{version}}/img/item/{{ item.id + '.png'}}" />
                         </div>
@@ -127,7 +127,7 @@
                              data-gold="{{itemData[item.itemId].gold.total}}"
                              data-sell="{{itemData[item.itemId].gold.sell}}"
                              data-desc="{{itemData[item.itemId].sanitizedDescription}}"
-                             class="item"
+                             class="item item-swappable"
                              ng-repeat="item in block track by $index">
                             <img preload-image
                                  data-fallback-image="http://ddragon.leagueoflegends.com/cdn/4.2.6/img/item/{{item.itemId}}.png"
@@ -156,9 +156,10 @@
             <h4 id="itemDetailsName"></h4>
             <p id="itemDetailsGold"></p>
             <p id="itemDetailsDesc"></p>
+            <p id="itemDetailsDelete"></p>
         </div>
     </div>
 
 </div>
-<script src="content/scripts/loading.js"></script>
+<button id="loadComplete" class="hidden"></button>
 <script src="content/scripts/setsUi.js"></script>
