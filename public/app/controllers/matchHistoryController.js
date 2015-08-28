@@ -37,7 +37,7 @@
 
 	    
 
-		$scope.matchDetails = function (heroId) {
+		$scope.matchDetails = function (heroId, index) {
             // Test whether or not a property of the match details object exists.
 		    function isEmpty(myObject) {
 		        for (var key in myObject) {
@@ -47,14 +47,19 @@
 		        }
 		        return true;
 		    }
-
+		    debugger;
 			if($scope.userName != undefined){			
 			    $scope.recentMatches = "";
                 waitingDialog.show('Loading match history...')
                 matchService.getHeroMatchDetails($scope.userId, heroId, $scope.selected_region.region).then(function (data) {
                     waitingDialog.hide();
 			        if (isEmpty(data.matches)) {
+<<<<<<< HEAD
 					    $scope.heroMatchResults = ": No matches found";    
+=======
+                        //
+					    $scope.heroMatchResults = ": No matches found with " + championService.heroList[index].name;    
+>>>>>>> 6afaf26e6ce5d1350418859aafb71f643af0441b
 						data = undefined;
 					}else{
 						$scope.heroMatchResults = "";
@@ -86,7 +91,8 @@
 			
 			var itemList = [];
 			
-			for(i=0; i < 7; i++){
+			for (i = 0; i < 7; i++) {
+			    debugger;
 				if(items["item"+i] != 0){
 					itemList.push(items["item"+i]);
 				} else {
@@ -146,12 +152,23 @@
 			
 		}
 
+<<<<<<< HEAD
 
 		$scope.getHeroItemSet = function (matchId){	   
+=======
+		
+		$scope.getHeroItemSet = function (matchId){
+		   
+>>>>>>> 6afaf26e6ce5d1350418859aafb71f643af0441b
 		    var url = "/sets/summoner=" + $scope.userId + "/match=" + matchId;
 		    $location.path(url);
 		}
 
+<<<<<<< HEAD
+=======
+
+		
+>>>>>>> 6afaf26e6ce5d1350418859aafb71f643af0441b
 	};	
 	
 	angular.module("app").controller("matchHistoryController", ["$scope", "$meteor", "$location", "championService", "matchService", matchHistoryController]);
