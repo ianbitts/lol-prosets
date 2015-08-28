@@ -11,6 +11,16 @@
             '12': "Howling Abyss"
 	    };
 
+	    $scope.getRandomChallenger = function(region){
+	        waitingDialog.show("Loading random challenger...");
+	        $meteor.call("GetChallengerLeague", region.region).then(function (response) {
+	            var randomIndex = Math.floor(Math.random() * response.entries.length);
+	            var name = response.entries[randomIndex].playerOrTeamName;
+	            $scope.userName = name;
+	            $scope.searchUser(name, region);
+	        })
+	    }
+
 	    $scope.regions = [
             { region: "br", name: "Brazil" }, { region: "eune", name: "Europe Nordic & East" }, { region: "euw", name: "Europe West" },
             { region: "lan" , name:"Latin America North" }, { region: "las" ,name: "Latin America South"},
@@ -21,11 +31,13 @@
 	    var onComplete = function (response) {
 	        $scope.heroes = championService.heroSort(response.data);
 	        championService.heroList = $scope.heroes;
+	        waitingDialog.hide();
 	    }
 
         // Gets hero list from the champion service.
 		if (championService.heroList.length == 0)
 		{
+		    waitingDialog.show('Loading champions...');
 			$meteor.call("GetHeroList").then(onComplete);
 		}
 		else
@@ -45,17 +57,19 @@
 		        }
 		        return true;
 		    }
-		    debugger;
+
 			if($scope.userName != undefined){			
 			    $scope.recentMatches = "";
-			    matchService.getHeroMatchDetails($scope.userId, heroId, $scope.selected_region.region).then(function (data) {
+                waitingDialog.show('Loading match history...')
+                matchService.getHeroMatchDetails($scope.userId, heroId, $scope.selected_region.region).then(function (data) {
+                    waitingDialog.hide();
 			        if (isEmpty(data.matches)) {
-                        //
+					    $scope.heroMatchResults = ": No matches found";    
 					    $scope.heroMatchResults = ": No matches found with " + championService.heroList[index].name;    
 						data = undefined;
 					}else{
 						$scope.heroMatchResults = "";
-						$scope.recentMatches = $filter('orderBy')(matchService.recentMatchSort(data.matches), "matchCreation", true);
+						$scope.recentMatches = matchService.recentMatchSort(data.matches);
 					}		
 				});
 				
@@ -84,7 +98,6 @@
 			var itemList = [];
 			
 			for (i = 0; i < 7; i++) {
-			    
 				if(items["item"+i] != 0){
 					itemList.push(items["item"+i]);
 				}
@@ -97,20 +110,19 @@
 		$scope.searchUser = function (userName, region) {
 		    
 		    $scope.recentMatches = undefined;
-			function hasWhiteSpace(s) {
-				return /\s/g.test(s);
-			}
 
 			if($scope.userName){
-
-			    matchService.getUserId(userName.replace(/\s/g, ''), region.region).then(function (data) {
+			    
+			    matchService.getUserId(userName, region.region).then(function (data) {
+			        
 			    		if(data != undefined){
 			    			$scope.userName = userName;
 			    			$scope.summonerResult = true;
 			    			$scope.userId = data[$scope.userName.replace(/\s/g, '').toLowerCase()].id;
 			    			$scope.userNameDisplay = "";
-
-			    			matchService.getRecentMatchDetails($scope.userId, region.region).then(function (matchData) {
+                            waitingDialog.show('Getting match history...')
+                            matchService.getRecentMatchDetails($scope.userId, region.region).then(function (matchData) {
+                                waitingDialog.hide();
 			    				if (matchData != null)
 			    				{
 			    				    $scope.recentDisplayName = "Recent matches:";
@@ -129,7 +141,7 @@
 			    			$scope.validation = "Invalid username";							
 			    			$scope.userId = undefined;							
 			    		}						
-			    }, function () { $scope.validation = "Invalid username"; });
+			    }, function () { $scope.validation = "An unexpected error has occurred. Please try again."; });
 			} else {
 			    $scope.recentDisplayName = "";
 			    $scope.validation = "Invalid username";
@@ -139,15 +151,12 @@
 			
 		}
 
-		
+ 	
 		$scope.getHeroItemSet = function (matchId){
-		   
 		    var url = "/sets/summoner=" + $scope.userId + "/match=" + matchId;
 		    $location.path(url);
 		}
 
-
-		
 	};	
 	
 	angular.module("app").controller("matchHistoryController", ["$scope", "$meteor", "$location", "championService", "matchService", matchHistoryController]);

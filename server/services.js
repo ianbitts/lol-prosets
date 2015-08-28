@@ -65,7 +65,11 @@ if (Meteor.isServer) {
             var url = "https://global.api.pvp.net/api/lol/static-data/na/v1.2/item/" + items + "?api_key=fc9cb83e-8c1d-488a-b71c-52c65f9ae015";
 
             return HTTP.call("GET", url).data;
-
+        },
+        GetChallengerLeague: function(region){
+            this.unblock();
+            var url = "https://" + region + ".api.pvp.net/api/lol/" + region + "/v2.5/league/challenger?type=RANKED_SOLO_5x5&api_key=fc9cb83e-8c1d-488a-b71c-52c65f9ae015";
+            return HTTP.call("GET", url).data;
         },
 
         ExportSetFile: function (json) {

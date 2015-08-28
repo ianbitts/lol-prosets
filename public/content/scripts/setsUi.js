@@ -3,34 +3,34 @@
     var draggable_enabled = false;
     
     // Activate event listeners for dynamic DOM elements after giving them a chance to load.
-    $(document).ready(function () {
-        waitingDialog.show('Loading Item and Match data...');
-        setTimeout(function () {
-            waitingDialog.hide();
-            $("div.item").draggable({
-                helper: "clone",
-                appendTo: "body",
-                drag: function (event, ui) {
-                    ui.helper.addClass("hover-off");
-                }
-            });
-            $(".droppable").droppable({
-                accept: "div.item",
-                drop: function (event, ui) {
-                    $(this).find(".placeholder").remove();
-                    $(ui.draggable).clone().appendTo(this);
+    $("#loadComplete").click(function (event) {
+        $("div.item-draggable").draggable({
+            helper: "clone",
+            appendTo: "body",
+            connectToSortable: ".droppable",
+            drag: function (event, ui) {
+                ui.helper.addClass("hover-off");
+            },
+            stop: function (event, ui) {
+                ui.helper.removeClass("hover-off");
+            }
+        });
 
-                    $("#noItems").animate({
-                        'line-height': 0,
-                        'opacity': 0,
-                        'height': 0,
-                        'padding': 0,
-                        'margin-top': 0,
-                    });
-                }
-            });
-        }, 4500);
+        $(".droppable").sortable({
+            appendTo: "body",
+            item: "div.item",
+            connectWith: ".droppable",
+            sort: function (event, ui) {
+                ui.helper.addClass("hover-off");
+            },
+            beforeStop: function (event, ui) {
+                ui.helper.removeClass("hover-off");
+            }
+        });
+
     });
+
+            
 
     // Remove an item block.
     $("body").on('click', '.remove-group', function (event) {
@@ -55,6 +55,15 @@
             $("#itemDetailsName").text(name);
             $("#itemDetailsDesc").text(desc);
             $("#itemDetailsGold").text("Buy:" + gold + " Sell: " + sell);
+
+            if (item.parent().hasClass("droppable"))
+            {
+                $("#itemDetailsDelete").text("Click to remove");
+            }
+            else
+            {
+                $("#itemDetailsDelete").text("");
+            }
 
             detailsPanel.css({ position: "absolute", left: event.pageX + 40, top: event.pageY - 30 });
             detailsPanel.fadeIn();
@@ -203,7 +212,12 @@
     // Click to remove items
     $(".panel-body").on('click', '.droppable div.item', function (event)
     {
-        $(event.target).remove();
+        var item = $(event.target)
+        if (item.is('img'))
+        {
+            var item = item.parent("div.item");
+        }
+        $(item).remove();
         $("#itemDetails").fadeOut();
     })
 
@@ -264,7 +278,7 @@
             set_json += '"items" : [ ';
             var items = $(element).children(".panel-body").children("div");
             items.each(function (i, item) {
-                set_json += '{ "id" : "' + $(item).attr('id') + '", "count" : 0 }';
+                set_json += '{ "id" : "' + $(item).attr('id') + '", "count" : 1 }';
                 if (i < items.length - 1)
                 {
                     set_json += ",";

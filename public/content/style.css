@@ -22,7 +22,9 @@ div.map{
     width: 185px;
     text-align: left;
 }
-
+.pad-right{
+    padding-right: 5px;
+}
 .map-panel{
     text-align: center;
     height: 274px;
@@ -328,6 +330,10 @@ ul li{
     margin: 0;
 }
 
+#itemDetailsDelete{
+    color: red;
+}
+
 @keyframes fadeIn{
     0% { opacity: 0;}
     100% { opacity: 1;}
@@ -341,3 +347,4 @@ ul li{
 .fadeinAnimate.ng-enter{ 
     animation:fadeIn 0.5s both ease-in;    
 }
+

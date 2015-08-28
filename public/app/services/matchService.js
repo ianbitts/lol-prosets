@@ -4,6 +4,8 @@
 
     var matchService = function ($meteor) {
 
+        
+
         // Get the recent matches of a player given their userID and region.
 		var getRecentMatchDetails = function(userId, region){
 		    return $meteor.call("GetRecentMatchDetails", userId, region).then(
@@ -25,8 +27,6 @@
 		var getUserId = function (userName, region) { 	    
 		    return $meteor.call("GetUserId", userName.toLowerCase(), region).then(function (response) {
 		        return response.data;
-		    }, function () {
-                console.log("THere is a problem with the api call for userId");
 		    });
 		}
 		
@@ -72,6 +72,7 @@
 			recentMatchSort:recentMatchSort,
 			getHeroMatchDetails: getHeroMatchDetails,
 			getItemData: getItemData
+			
         };
 
 
