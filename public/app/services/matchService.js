@@ -25,6 +25,8 @@
 		var getUserId = function (userName, region) { 	    
 		    return $meteor.call("GetUserId", userName.toLowerCase(), region).then(function (response) {
 		        return response.data;
+		    }, function () {
+                console.log("THere is a problem with the api call for userId");
 		    });
 		}
 		

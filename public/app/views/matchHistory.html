@@ -89,8 +89,7 @@
                                 </td>
 
                                 <td class="col-xs-4">
-                                    <div class="itemContainer" id="detectZeroImage" ng-repeat="itemList in getItemListPerMatch(match.participants[0].stats) track by $index"
-                                         ng-mouseover="getItemDetails(match.participants[0].stats['item' + $index])">
+                                    <div class="itemContainer" id="detectZeroImage" ng-repeat="itemList in getItemListPerMatch(match.participants[0].stats) track by $index">
                                         <img class="item-img-format" data-preload-image
                                              onerror="if (this.src != 'content/images/yellow-paper.jpg') this.src = 'content/images/yellow-paper.jpg';"
                                              data-fallback-image="http://ddragon.leagueoflegends.com/cdn/4.2.6/img/item/{{itemList}}.png"

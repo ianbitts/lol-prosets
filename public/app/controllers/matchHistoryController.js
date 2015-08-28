@@ -84,13 +84,9 @@
 			var itemList = [];
 			
 			for (i = 0; i < 7; i++) {
-			    debugger;
+			    
 				if(items["item"+i] != 0){
 					itemList.push(items["item"+i]);
-				} else {
-				    
-				    itemList.push(0);
-
 				}
 			}
 
