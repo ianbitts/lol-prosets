@@ -39,10 +39,4 @@
         }
     });
 
-    $scope.reloadMatchHistory = function () {
-
-        $route.reload();
-
-    }
-
 }());
