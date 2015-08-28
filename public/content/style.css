@@ -6,10 +6,28 @@
     background-repeat: no-repeat;
     background-color: rgb(1, 20, 1);
 }
+.footer{
+    color: rgb(205, 175, 0);
+    margin-bottom: 5px;
+}
+.bold{
+    font-weight: bold;
+}
+img.home-screenshot{
+    border: groove black 1px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+#search_summoner{
+    height: 250px;
+}
 .navbar{
     margin-top: 10px;
 }
-
+p.home-text{
+    color: black;
+    font-size: large;
+}
 ul.nav li a {
     color: gold;
 }
@@ -43,7 +61,10 @@ div.map{
 .champion-selected img{
     border: solid 3px rgb(0, 188, 188);
 }
-
+img#recent_match{
+    width: 800px;
+    margin-top: 10px;
+}
 /* Set padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;
@@ -253,6 +274,7 @@ ul li{
 
 .panel-body .panel-body{
     background-image: url(/content/images/yellow-paper.jpg);
+    overflow-x: hidden;
 }
 
 .remove-group{
@@ -348,3 +370,6 @@ ul li{
     animation:fadeIn 0.5s both ease-in;    
 }
 
+img.item_set{
+    height: 454px;
+}

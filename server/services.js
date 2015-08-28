@@ -10,9 +10,13 @@ if (Meteor.isServer) {
             return HTTP.call("GET", url);
         },
 
-        GetMatchDetails: function (matchId) {
+        GetMatchDetails: function (matchId, region) {
             this.unblock();
-            var url = "https://na.api.pvp.net/api/lol/na/v2.2/match/" + matchId + "?includeTimeline=true&api_key=fc9cb83e-8c1d-488a-b71c-52c65f9ae015";
+            if (region == null)
+            {
+                region = "na";
+            }
+            var url = "https://" + region + ".api.pvp.net/api/lol/" + region + "/v2.2/match/" + matchId + "?includeTimeline=true&api_key=fc9cb83e-8c1d-488a-b71c-52c65f9ae015";
             return HTTP.call("GET", url);
         },
 

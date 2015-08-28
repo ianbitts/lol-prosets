@@ -155,8 +155,8 @@
 		}
 
  	
-		$scope.getHeroItemSet = function (matchId){
-		    var url = "/sets/summoner=" + $scope.userId + "/match=" + matchId;
+		$scope.getHeroItemSet = function (matchId, region){
+		    var url = "/sets/region=" + region + "&summoner=" + $scope.userId + "&match=" + matchId;
 		    $location.path(url);
 		}
 

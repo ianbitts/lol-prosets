@@ -84,7 +84,7 @@
                                 }
                                 else if (events[eventIndex].eventType == "ITEM_SOLD" || events[eventIndex].eventType == "ITEM_DESTROYED")
                                 {
-                                    starting_destroys.push(events[eventIndex]);
+                                    starting_sells.push(events[eventIndex]);
                                 }          
                             }
                             else if (events[eventIndex].timestamp < early_game_threshold)
@@ -208,7 +208,7 @@
         $meteor.call("GetMapData").then(mapsComplete);
         $meteor.call("GetItemList").then(itemsComplete).then(function () {
             if ($routeParams.userId != null && $routeParams.matchId != null) {
-                $meteor.call("GetMatchDetails", $routeParams.matchId).then(loadMatch);
+                $meteor.call("GetMatchDetails", $routeParams.matchId, $routeParams.region).then(loadMatch);
             }
             else {
                 loadDefaults();

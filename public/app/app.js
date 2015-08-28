@@ -8,7 +8,7 @@
         .when("/", {
             templateUrl: "app/views/home.html"
         })
-        .when("/sets/summoner=:userId/match=:matchId", {
+        .when("/sets/region=:region&summoner=:userId&match=:matchId", {
             templateUrl: "app/views/sets.html",
             controller: "setsController",
         })
