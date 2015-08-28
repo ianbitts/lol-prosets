@@ -11,6 +11,16 @@
             '12': "Howling Abyss"
 	    };
 
+	    $scope.getRandomChallenger = function(region){
+	        waitingDialog.show("Loading random challenger...");
+	        $meteor.call("GetChallengerLeague", region.region).then(function (response) {
+	            var randomIndex = Math.floor(Math.random() * response.entries.length);
+	            var name = response.entries[randomIndex].playerOrTeamName;
+	            $scope.userName = name;
+	            $scope.searchUser(name, region);
+	        })
+	    }
+
 	    $scope.regions = [
             { region: "br", name: "Brazil" }, { region: "eune", name: "Europe Nordic & East" }, { region: "euw", name: "Europe West" },
             { region: "lan" , name:"Latin America North" }, { region: "las" ,name: "Latin America South"},
@@ -47,19 +57,15 @@
 		        }
 		        return true;
 		    }
-		    debugger;
+
 			if($scope.userName != undefined){			
 			    $scope.recentMatches = "";
                 waitingDialog.show('Loading match history...')
                 matchService.getHeroMatchDetails($scope.userId, heroId, $scope.selected_region.region).then(function (data) {
                     waitingDialog.hide();
 			        if (isEmpty(data.matches)) {
-<<<<<<< HEAD
 					    $scope.heroMatchResults = ": No matches found";    
-=======
-                        //
 					    $scope.heroMatchResults = ": No matches found with " + championService.heroList[index].name;    
->>>>>>> 6afaf26e6ce5d1350418859aafb71f643af0441b
 						data = undefined;
 					}else{
 						$scope.heroMatchResults = "";
@@ -92,7 +98,6 @@
 			var itemList = [];
 			
 			for (i = 0; i < 7; i++) {
-			    debugger;
 				if(items["item"+i] != 0){
 					itemList.push(items["item"+i]);
 				} else {
@@ -109,9 +114,6 @@
 		$scope.searchUser = function (userName, region) {
 		    
 		    $scope.recentMatches = undefined;
-			function hasWhiteSpace(s) {
-				return /\s/g.test(s);
-			}
 
 			if($scope.userName){
 
@@ -152,23 +154,12 @@
 			
 		}
 
-<<<<<<< HEAD
-
-		$scope.getHeroItemSet = function (matchId){	   
-=======
-		
+ 	
 		$scope.getHeroItemSet = function (matchId){
-		   
->>>>>>> 6afaf26e6ce5d1350418859aafb71f643af0441b
 		    var url = "/sets/summoner=" + $scope.userId + "/match=" + matchId;
 		    $location.path(url);
 		}
 
-<<<<<<< HEAD
-=======
-
-		
->>>>>>> 6afaf26e6ce5d1350418859aafb71f643af0441b
 	};	
 	
 	angular.module("app").controller("matchHistoryController", ["$scope", "$meteor", "$location", "championService", "matchService", matchHistoryController]);
