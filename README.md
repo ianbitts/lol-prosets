@@ -16,3 +16,15 @@ as a zipped JSON file, and merge the file into their League of Legends config di
 
 # Live demonstration
 Lol Prosets is hosted at http://lol-prosets.meteor.com. 
+
+# Technologies & Plugins Used
+Technologies:
+Meteor
+Angular
+jQuery
+Bootstrap3
+
+Plugins and Other Snippets
+angular-image-preloader by Ben Nadel: http://www.bennadel.com/blog/2597-preloading-images-in-angularjs-with-promises.htm
+waitingDialog loading modal by Eugene Maslovich: http://bootsnipp.com/snippets/featured/quotwaiting-forquot-modal-dialog
+hoverIntent by Brian Cherne: http://cherne.net/brian/resources/jquery.hoverIntent.html
