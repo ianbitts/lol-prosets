@@ -14,10 +14,22 @@ Lol Prosets also offers a minimized interface for creating item sets from scratc
 the same level of detail that is offered by the in game tool. Once a player has perfected their set, they can download the set
 as a zipped JSON file, and merge the file into their League of Legends config directory in order to use the set in game.
 
-# Live demonstration
+## Live demonstration
 Lol Prosets is hosted at http://lol-prosets.meteor.com. 
 
-# Technologies & Plugins Used
+## Set up
+A link to a live demo is provided above, however if you would like to download the source code and run the web app on your
+own computer, follow these set-up instructions:
+
++ Install Meteor: www.meteor.com/install
++ Use the ```meteor create``` command to create a new project.
++ Remove all contents of your newly created project. Use your prefered git client to clone the repository into this directory.
++ Replace the comment in ```server/services.js``` with your API key.
++ Install atmosphere packages using the ```meteor update``` command.
++ Run the project using the ```meteor``` command. The default URI for the project will be http://localhost:3000.
++ (Optional) Public the project using the ```meteor deploy``` command.
+
+## Technologies & Plugins Used
 Technologies:
 Meteor
 Angular
