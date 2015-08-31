@@ -22,10 +22,8 @@ A link to a live demo is provided above, however if you would like to download t
 own computer, follow these set-up instructions:
 
 + Install Meteor: www.meteor.com/install
-+ Use the ```meteor create``` command to create a new project.
-+ Remove all contents of your newly created project. Use your prefered git client to clone the repository into this directory.
-+ Replace the comment in ```server/services.js``` with your API key.
-+ Install atmosphere packages using the ```meteor update``` command.
++ Use your prefered git client to clone the repository.
++ Replace the comment at the top of ```lol-prosets/server/services.js``` with your API key.
 + Run the project using the ```meteor``` command. The default URI for the project will be http://localhost:3000.
 + (Optional) Public the project using the ```meteor deploy``` command.
 
