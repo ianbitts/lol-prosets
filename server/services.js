@@ -46,7 +46,7 @@ if (Meteor.isServer) {
         GetSpecificItem: function (itemId) {
             this.unblock();
             var url = "https://global.api.pvp.net/api/lol/static-data/na/v1.2/item/";
-            url += itemId + "?itemData=all&api_key=fc9cb83e-8c1d-488a-b71c-52c65f9ae015";
+            url += itemId + "?itemData=all&api_key=" + api_key;
             return HTTP.call("GET", url).data;
         },
 
